@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login - BVIT SALARY SLIP</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="icon" type="image/x-icon" href="../public/favicon.ico" />
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fteacherpay1871back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.7"></script>
+    <!-- Firebase Integration -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="../config/firebase-config.js"></script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-primary-50 via-background to-secondary-50">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 opacity-5">
+        <svg class="w-full h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                    <path d="M 10 0 L 0 0 0 10" fill="none" stroke="currentColor" stroke-width="0.5"/>
+                </pattern>
+            </defs>
+            <rect width="100" height="100" fill="url(#grid)"/>
+        </svg>
+    </div>
+
+    <!-- Main Container -->
+    <div class="relative min-h-screen flex items-center justify-center px-4 py-12">
+        <div class="w-full max-w-md">
+            <!-- Logo and Branding -->
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center justify-center mb-4">
+                    <img src="../public/bharati_logo.png" alt="Bharati Vidyapeeth Logo" class="object-contain" style="width: auto; height: auto; max-width: 120px; max-height: 120px;" />
+                </div>
+                <h1 class="text-fluid-3xl font-bold text-text-primary mb-2">BVIT SALARY SLIP</h1>
+                <p class="text-fluid-base text-text-secondary font-caption">Admin Portal</p>
+            </div>
+
+            <!-- Login Form Card -->
+            <div class="glass-card p-8 shadow-elevation-3">
+
+
+                <!-- Error Message (Hidden by default) -->
+                <div id="error-message" class="hidden mb-4 p-3 bg-error-50 border border-error-200 rounded-md">
+                    <div class="flex items-center">
+                        <svg class="w-4 h-4 text-error-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <span class="text-sm text-error-700" id="error-text">Invalid credentials. Please try again.</span>
+                    </div>
+                </div>
+
+                <!-- Admin Login Form -->
+                <form id="admin-login-form" class="space-y-6">
+                    <!-- Email/Username Field -->
+                    <div>
+                        <label for="email" class="form-label">Email Address</label>
+                        <div class="relative">
+                            <input type="email" id="email" name="email" class="form-input pl-10" placeholder="Enter your email address" required autocomplete="email" />
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="w-4 h-4 text-secondary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Password Field -->
+                    <div>
+                        <label for="password" class="form-label">Password</label>
+                        <div class="relative">
+                            <input type="password" id="password" name="password" class="form-input pl-10 pr-10" placeholder="Enter your password" required autocomplete="current-password" />
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="w-4 h-4 text-secondary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                                </svg>
+                            </div>
+                            <button type="button" id="toggle-password" class="absolute inset-y-0 right-0 pr-3 flex items-center focus:outline-none">
+                                <svg id="eye-closed" class="w-4 h-4 text-secondary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"/>
+                                </svg>
+                                <svg id="eye-open" class="w-4 h-4 text-secondary-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Remember Me and Forgot Password -->
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-primary focus:ring-primary-500 border-secondary-300 rounded" />
+                            <label for="remember-me" class="ml-2 block text-sm text-text-secondary font-caption">
+                                Remember me
+                            </label>
+                        </div>
+                        <div class="text-sm">
+                            <a href="javascript:void(0)" class="font-medium text-primary hover:text-primary-700 transition-colors duration-200">
+                                Forgot password?
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Login Button -->
+                    <div>
+                        <button type="submit" id="login-btn" class="w-full btn-primary py-3 text-base font-medium relative overflow-hidden">
+                            <span id="login-text">Sign In</span>
+                            <div id="login-spinner" class="hidden absolute inset-0 flex items-center justify-center">
+                                <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                                </svg>
+                            </div>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Alternative Login -->
+                <div class="mt-6 text-center">
+                    <p class="text-sm text-text-secondary font-caption">
+                        Are you a teacher? 
+                        <a href="pages/teacher_login.html" class="font-medium text-primary hover:text-primary-700 transition-colors duration-200">
+                            Sign in here
+                        </a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Trust Signals -->
+            <div class="mt-8 text-center space-y-4">
+                <div class="flex items-center justify-center space-x-6">
+                    <!-- SSL Badge -->
+                    <div class="flex items-center space-x-2 text-xs text-text-secondary">
+                        <svg class="w-4 h-4 text-success-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                        </svg>
+                        <span class="font-caption">SSL Secured</span>
+                    </div>
+                    
+                    <!-- Privacy Badge -->
+                    <div class="flex items-center space-x-2 text-xs text-text-secondary">
+                        <svg class="w-4 h-4 text-success-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                        </svg>
+                        <span class="font-caption">Data Protected</span>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="text-xs text-text-secondary font-caption">
+                    <p>© 2025 BVIT SALARY SLIP. All Rights Reserved.</p>
+                    <p class="mt-1">Educational Institution Payroll Management System</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Password toggle functionality
+        document.getElementById('toggle-password').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const eyeClosed = document.getElementById('eye-closed');
+            const eyeOpen = document.getElementById('eye-open');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeClosed.classList.add('hidden');
+                eyeOpen.classList.remove('hidden');
+            } else {
+                passwordInput.type = 'password';
+                eyeClosed.classList.remove('hidden');
+                eyeOpen.classList.add('hidden');
+            }
+        });
+
+        // Form submission handling
+        document.getElementById('admin-login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const loginBtn = document.getElementById('login-btn');
+            const loginText = document.getElementById('login-text');
+            const loginSpinner = document.getElementById('login-spinner');
+            const errorMessage = document.getElementById('error-message');
+            
+            // Show loading state
+            loginBtn.disabled = true;
+            loginText.classList.add('opacity-0');
+            loginSpinner.classList.remove('hidden');
+            
+            // Hide previous error messages
+            errorMessage.classList.add('hidden');
+            
+            // Simulate authentication delay
+            setTimeout(async () => {
+                // Firebase Authentication logic
+                try {
+                    // Initialize Firebase if not already initialized
+                    if (!firebase.apps.length) {
+                        firebase.initializeApp(firebaseConfig);
+                    }
+                    
+                    // Use Firebase Authentication
+                    await firebase.auth().signInWithEmailAndPassword(email, password);
+                    
+                    // Get current authenticated user
+                    const user = firebase.auth().currentUser;
+                    if (!user) {
+                        throw new Error('Authentication failed');
+                    }
+                    
+                    // Check if this is a valid admin email
+                    const adminEmails = [
+                        'admin@bvit.edu',
+                        'admin@teacherpay.com',
+                        'administrator@bvit.edu'
+                    ];
+                    
+                    if (!adminEmails.includes(user.email.toLowerCase())) {
+                        // Sign out non-admin user
+                        await firebase.auth().signOut();
+                        throw new Error('Access denied. Only administrators can login here.');
+                    }
+                    
+                    // Check if user is admin in database
+                    const adminRef = firebase.database().ref(`admins/${user.uid}`);
+                    const snapshot = await adminRef.once('value');
+                    let adminData = snapshot.val();
+                    
+                    // If admin record doesn't exist, create default admin record
+                    if (!adminData) {
+                        adminData = {
+                            id: user.uid,
+                            email: user.email,
+                            name: user.displayName || user.email.split('@')[0],
+                            role: 'super_admin',
+                            status: 'active',
+                            permissions: {
+                                teacher_management: true,
+                                payroll_management: true
+                            },
+                            createdAt: Date.now(),
+                            createdBy: 'system'
+                        };
+                        
+                        // Create admin record in database
+                        await adminRef.set(adminData);
+                        console.log('✅ Admin record created for:', user.email);
+                    }
+                    
+                    if (adminData.status !== 'active') {
+                        // Sign out if not active admin
+                        await firebase.auth().signOut();
+                        throw new Error('Admin account is inactive. Contact system administrator.');
+                    }
+                    
+                    // Update last login time in Firebase
+                    await adminRef.update({
+                        lastLogin: Date.now(),
+                        lastLoginIP: 'unknown' // You can implement IP detection if needed
+                    });
+                    
+                    // Store session data
+                    sessionStorage.setItem('adminLoggedIn', 'true');
+                    sessionStorage.setItem('adminEmail', adminData.email);
+                    sessionStorage.setItem('adminId', user.uid);
+                    sessionStorage.setItem('adminRole', adminData.role);
+                    sessionStorage.setItem('adminName', adminData.name);
+                    sessionStorage.setItem('loginTime', new Date().toISOString());
+                    
+                    // Redirect to admin dashboard
+                    window.location.href = 'admin_dashboard.html';
+                    
+                } catch (error) {
+                    console.error('Login error:', error);
+                    errorMessage.classList.remove('hidden');
+                    
+                    // Reset button state
+                    loginBtn.disabled = false;
+                    loginText.classList.remove('opacity-0');
+                    loginSpinner.classList.add('hidden');
+                }
+            }, 1500);
+        });
+
+        // Input validation and styling
+        const inputs = document.querySelectorAll('input[type="email"], input[type="password"]');
+        inputs.forEach(input => {
+            input.addEventListener('blur', function() {
+                if (this.value && !this.checkValidity()) {
+                    this.classList.add('border-error-500', 'focus:ring-error-500', 'focus:border-error-500');
+                    this.classList.remove('border-secondary-200', 'focus:ring-primary-500', 'focus:border-primary-500');
+                } else {
+                    this.classList.remove('border-error-500', 'focus:ring-error-500', 'focus:border-error-500');
+                    this.classList.add('border-secondary-200', 'focus:ring-primary-500', 'focus:border-primary-500');
+                }
+            });
+            
+            input.addEventListener('input', function() {
+                // Hide error message when user starts typing
+                document.getElementById('error-message').classList.add('hidden');
+            });
+        });
+
+        // Auto-focus email field on page load
+        window.addEventListener('load', function() {
+            document.getElementById('email').focus();
+        });
+    </script>
+    <!-- Firebase Integration -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="../config/firebase-config.js"></script>
+    <script src="../js/firebase-db.js"></script>
+    
+    <!-- Initialize Firebase -->
+    <script>
+        // Initialize Firebase on page load
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+    </script>
+</body>
+</html>
