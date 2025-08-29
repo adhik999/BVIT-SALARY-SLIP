@@ -1,0 +1,1673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teacher Dashboard - BVIT SALARY SLIP</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="icon" type="image/x-icon" href="../public/favicon.ico" />
+    <style>
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #payslip-content, #payslip-content * {
+                visibility: visible;
+            }
+            #payslip-content {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                border: none !important;
+                box-shadow: none !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            #payslip-modal {
+                position: static !important;
+                background: white !important;
+            }
+        }
+        
+        .no-print {
+            display: block;
+        }
+        
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            
+            /* Print styles for A5 payslip */
+            #payslip-modal {
+                position: static !important;
+                background: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+                max-height: none !important;
+                overflow: visible !important;
+            }
+            
+            #payslip-modal > div {
+                width: 148mm !important;
+                height: 210mm !important;
+                max-height: none !important;
+                overflow: visible !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                margin: 0 auto !important;
+                page-break-inside: avoid !important;
+            }
+            
+            #payslip-content {
+                border: 2px solid #666 !important;
+                padding: 8mm !important;
+                margin: 0 !important;
+                background: white !important;
+                font-size: 11pt !important;
+                line-height: 1.2 !important;
+            }
+            
+            /* Hide modal header in print */
+            #payslip-modal .flex-shrink-0:first-child {
+                display: none !important;
+            }
+            
+            /* Hide action buttons in print */
+            #payslip-modal .flex-shrink-0:last-child {
+                display: none !important;
+            }
+            
+            /* Optimize fonts for print */
+            #payslip-content h1 {
+                font-size: 14pt !important;
+            }
+            
+            #payslip-content h2 {
+                font-size: 12pt !important;
+            }
+            
+            #payslip-content .text-sm {
+                font-size: 10pt !important;
+            }
+            
+            /* Table styles for print */
+            #payslip-content .bg-gray-100 {
+                background-color: #f5f5f5 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            
+            /* Signature section for print */
+            #payslip-content .border-t:last-child {
+                margin-top: 5mm !important;
+            }
+            
+            /* Page setup */
+            @page {
+                size: A5;
+                margin: 5mm;
+            }
+            
+            body {
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+        }
+    </style>
+    <script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fteacherpay1871back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.7"></script>
+    <!-- Firebase Integration -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="../config/firebase-config.js"></script>
+    <script src="../js/firebase-db.js"></script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-primary-50 via-background to-secondary-50">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 opacity-5">
+        <svg class="w-full h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                    <path d="M 10 0 L 0 0 0 10" fill="none" stroke="currentColor" stroke-width="0.5"/>
+                </pattern>
+            </defs>
+            <rect width="100" height="100" fill="url(#grid)"/>
+        </svg>
+    </div>
+
+    <!-- Header -->
+    <header class="relative bg-white shadow-elevation-1 border-b border-secondary-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo and Brand -->
+                <div class="flex items-center space-x-3">
+                    <div class="flex items-center justify-center w-10 h-10 bg-primary rounded-lg shadow-elevation-1">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-semibold text-text-primary">BVIT SALARY SLIP</h1>
+                        <p class="text-xs text-text-secondary font-caption">Salary Management System</p>
+                    </div>
+                </div>
+
+                <!-- User Info and Actions -->
+                <div class="flex items-center space-x-4">
+                    <!-- Teacher Info -->
+                    <div class="hidden md:block text-right">
+                        <p class="text-sm font-medium text-text-primary" id="teacher-name">Dr. Sarah Johnson</p>
+                        <p class="text-xs text-text-secondary font-caption" id="teacher-id">ID: TCH001</p>
+                    </div>
+
+                    <!-- User Avatar -->
+                    <div class="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center">
+                        <span class="text-sm font-medium text-primary" id="teacher-initials">SJ</span>
+                    </div>
+
+                    <!-- Logout Button -->
+                    <button id="logout-btn" class="flex items-center space-x-2 px-3 py-2 text-sm text-text-secondary hover:text-text-primary transition-colors duration-200">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                        </svg>
+                        <span class="hidden sm:inline">Logout</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Welcome Section -->
+        <div class="mb-8">
+            <h2 class="text-fluid-2xl font-semibold text-text-primary mb-2">Welcome back, <span id="welcome-name">Dr. Sarah Johnson</span></h2>
+            <p class="text-text-secondary font-caption">Access your salary information and manage your payslips</p>
+        </div>
+
+        <!-- Profile Summary Card -->
+        <section class="mb-8">
+            <div class="glass-card p-6 shadow-elevation-2">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                    <div class="flex items-center space-x-4 mb-4 md:mb-0">
+                        <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center">
+                            <span class="text-xl font-semibold text-primary" id="profile-initials">SJ</span>
+                        </div>
+                        <div>
+                            <h3 class="text-fluid-lg font-semibold text-text-primary" id="profile-name">Dr. Sarah Johnson</h3>
+                            <p class="text-text-secondary font-caption" id="profile-designation">Associate Professor</p>
+                            <p class="text-sm text-text-secondary font-caption" id="profile-department">Department of Computer Science</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 gap-4 text-center">
+                        <div class="bg-primary-50 rounded-lg p-3">
+                            <p class="text-xs text-text-secondary font-caption">Teacher ID</p>
+                            <p class="text-sm font-semibold text-text-primary font-data" id="profile-teacher-id">TCH001</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filters and Search -->
+        <section class="mb-6">
+            <div class="glass-card p-4 shadow-elevation-1">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <!-- Year Selector -->
+                        <div>
+                            <label for="year-select" class="form-label">Year</label>
+                            <select id="year-select" class="form-input w-full sm:w-32">
+                                <option value="2025">2025</option>
+                                <option value="2024">2024</option>
+                                <option value="2023">2023</option>
+                            </select>
+                        </div>
+
+                        <!-- Month Selector -->
+                        <div>
+                            <label for="month-select" class="form-label">Month</label>
+                            <select id="month-select" class="form-input w-full sm:w-40">
+                                <option value>All Months</option>
+                                <option value="01">January</option>
+                                <option value="02">February</option>
+                                <option value="03">March</option>
+                                <option value="04">April</option>
+                                <option value="05">May</option>
+                                <option value="06">June</option>
+                                <option value="07">July</option>
+                                <option value="08">August</option>
+                                <option value="09">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Search -->
+                    <div class="flex-1 max-w-md">
+                        <label for="search-input" class="form-label">Search Payslips</label>
+                        <div class="relative">
+                            <input type="text" id="search-input" class="form-input pl-10" placeholder="Search by month or amount..." />
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="w-4 h-4 text-secondary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Request Payslip Section -->
+        <section class="mb-6">
+            <div class="glass-card p-6 shadow-elevation-1">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-fluid-lg font-semibold text-text-primary">Request New Payslip</h3>
+                    <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                    </svg>
+                </div>
+                
+                <form id="payslip-request-form" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- Month Selection -->
+                    <div>
+                        <label for="request-month" class="form-label">Select Month *</label>
+                        <select id="request-month" class="form-input" required>
+                            <option value="">Choose Month</option>
+                            <option value="January">January 2025</option>
+                            <option value="February">February 2025</option>
+                            <option value="March">March 2025</option>
+                            <option value="April">April 2025</option>
+                            <option value="May">May 2025</option>
+                            <option value="June">June 2025</option>
+                            <option value="July">July 2025</option>
+                            <option value="August">August 2025</option>
+                            <option value="September">September 2025</option>
+                            <option value="October">October 2025</option>
+                            <option value="November">November 2025</option>
+                            <option value="December">December 2025</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Purpose Selection -->
+                    <div>
+                        <label for="request-purpose" class="form-label">Purpose/Reason *</label>
+                        <select id="request-purpose" class="form-input" required>
+                            <option value="">Choose Purpose</option>
+                            <option value="Bank Loan Application">Bank Loan Application</option>
+                            <option value="Visa Application">Visa Application</option>
+                            <option value="Job Application">Job Application</option>
+                            <option value="Income Tax Filing">Income Tax Filing</option>
+                            <option value="Insurance Claim">Insurance Claim</option>
+                            <option value="Education Loan">Education Loan</option>
+                            <option value="Home Loan">Home Loan</option>
+                            <option value="Personal Verification">Personal Verification</option>
+                            <option value="Government Documentation">Government Documentation</option>
+                            <option value="Other Official Purpose">Other Official Purpose</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Submit Button -->
+                    <div class="flex items-end">
+                        <button type="submit" class="btn-primary w-full">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                            </svg>
+                            Send Request
+                        </button>
+                    </div>
+                </form>
+                
+                <!-- Request Status -->
+                <div id="request-status" class="mt-4 hidden">
+                    <div class="p-3 bg-success-50 border border-success-200 rounded-md">
+                        <div class="flex items-center">
+                            <svg class="w-4 h-4 text-success-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <span class="text-sm text-success-700 font-medium">Request sent successfully! Admin will review and approve.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Payslips Section -->
+            <div class="lg:col-span-2">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-fluid-xl font-semibold text-text-primary">Your Payslips</h3>
+                    <div class="flex items-center space-x-2 text-sm text-text-secondary font-caption">
+                        <svg class="w-4 h-4 text-success-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                        </svg>
+                        <span>Secure & Confidential</span>
+                    </div>
+                </div>
+
+                <!-- Payslip Cards -->
+                <div id="payslips-container" class="space-y-4">
+                    <!-- Loading State -->
+                    <div id="loading-state" class="hidden">
+                        <div class="space-y-4">
+                            <div class="glass-card p-6 shadow-elevation-1">
+                                <div class="animate-pulse">
+                                    <div class="flex justify-between items-start mb-4">
+                                        <div class="space-y-2">
+                                            <div class="h-4 bg-secondary-200 rounded w-24"></div>
+                                            <div class="h-3 bg-secondary-200 rounded w-16"></div>
+                                        </div>
+                                        <div class="h-6 bg-secondary-200 rounded w-20"></div>
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-4 mb-4">
+                                        <div class="h-3 bg-secondary-200 rounded"></div>
+                                        <div class="h-3 bg-secondary-200 rounded"></div>
+                                    </div>
+                                    <div class="flex space-x-2">
+                                        <div class="h-8 bg-secondary-200 rounded w-24"></div>
+                                        <div class="h-8 bg-secondary-200 rounded w-20"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payslip Cards will be populated by JavaScript -->
+                </div>
+
+                <!-- No Results State -->
+                <div id="no-results" class="hidden text-center py-12">
+                    <svg class="w-16 h-16 text-secondary-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                    <h4 class="text-lg font-medium text-text-primary mb-2">No Payslips Found</h4>
+                    <p class="text-text-secondary font-caption">Try adjusting your search criteria or contact HR for assistance.</p>
+                </div>
+            </div>
+
+            <!-- Summary Sidebar -->
+            <div class="lg:col-span-1">
+            </div>
+        </div>
+    </main>
+
+    <!-- JavaScript -->
+    <script>
+        // Function to convert number to words
+        function numberToWords(num) {
+            const ones = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
+            const teens = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+            const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+            
+            if (num === 0) return 'Zero';
+            
+            function convertHundreds(n) {
+                let result = '';
+                if (n >= 100) {
+                    result += ones[Math.floor(n / 100)] + ' Hundred ';
+                    n %= 100;
+                }
+                if (n >= 20) {
+                    result += tens[Math.floor(n / 10)] + ' ';
+                    n %= 10;
+                } else if (n >= 10) {
+                    result += teens[n - 10] + ' ';
+                    n = 0;
+                }
+                if (n > 0) {
+                    result += ones[n] + ' ';
+                }
+                return result;
+            }
+            
+            let result = '';
+            let crore = Math.floor(num / 10000000);
+            num %= 10000000;
+            let lakh = Math.floor(num / 100000);
+            num %= 100000;
+            let thousand = Math.floor(num / 1000);
+            num %= 1000;
+            
+            if (crore > 0) {
+                result += convertHundreds(crore) + 'Crore ';
+            }
+            if (lakh > 0) {
+                result += convertHundreds(lakh) + 'Lakh ';
+            }
+            if (thousand > 0) {
+                result += convertHundreds(thousand) + 'Thousand ';
+            }
+            if (num > 0) {
+                result += convertHundreds(num);
+            }
+            
+            return result.trim() + ' Only';
+        }
+
+        // Get payslips from Firebase for specific teacher
+        async function getTeacherPayslips(teacherId) {
+            try {
+                console.log(`🔍 Starting payslip search for teacher ID: "${teacherId}" (type: ${typeof teacherId})`);
+                
+                // Initialize Firebase DB if not already done
+                if (typeof FirebaseDB !== 'undefined') {
+                    const firebaseDB = new FirebaseDB();
+                    await firebaseDB.initialize();
+                    
+                    // Get paysheet data from Firebase
+                    const paysheetData = await new Promise((resolve) => {
+                        firebaseDB.getPaysheetData((data) => {
+                            resolve(data || {});
+                        });
+                    });
+                    
+                    console.log('📊 Complete paysheet data structure:', paysheetData);
+                    console.log('📊 Available months:', Object.keys(paysheetData));
+                    
+                    // Filter payslips for this specific teacher
+                    const teacherPayslips = [];
+                    let totalRecordsChecked = 0;
+                    
+                    Object.keys(paysheetData).forEach(month => {
+                        const monthData = paysheetData[month];
+                        console.log(`\n📅 Checking month ${month}:`, monthData);
+                        
+                        if (monthData && monthData.records) {
+                            console.log(`📋 Records count for ${month}: ${monthData.records.length}`);
+                            
+                            // Log all teacher IDs in this month for debugging
+                            const allTeacherIds = monthData.records.map(record => {
+                                const ids = {
+                                    teacher_id: record.teacher_id,
+                                    id: record.id,
+                                    emp_id: record.emp_id,
+                                    name: record.name
+                                };
+                                totalRecordsChecked++;
+                                return ids;
+                            });
+                            console.log(`🆔 All teacher IDs in ${month}:`, allTeacherIds);
+                            
+                            const teacherRecord = monthData.records.find(record => {
+                                // Enhanced matching with case-insensitive and trimmed comparisons
+                                const normalizeValue = (val) => {
+                                    if (val === null || val === undefined) return '';
+                                    return val.toString().trim().toLowerCase();
+                                };
+                                
+                                // Extract teacher ID from the full ID format (e.g., 'n013_july_2025' -> 'n013')
+                                const extractTeacherId = (fullId) => {
+                                    if (!fullId) return '';
+                                    const parts = fullId.toString().split('_');
+                                    return parts[0] || '';
+                                };
+                                
+                                const searchId = normalizeValue(teacherId);
+                                const recordTeacherId = normalizeValue(record.teacher_id);
+                                const recordId = normalizeValue(record.id);
+                                const recordEmpId = normalizeValue(record.emp_id);
+                                const recordName = normalizeValue(record.name);
+                                const extractedId = normalizeValue(extractTeacherId(record.id));
+                                
+                                console.log(`🔍 Comparing "${searchId}" with:`, {
+                                    teacher_id: recordTeacherId,
+                                    id: recordId,
+                                    extracted_id: extractedId,
+                                    emp_id: recordEmpId,
+                                    name: recordName
+                                });
+                                
+                                const matches = searchId === recordTeacherId || 
+                                               searchId === recordId ||
+                                               searchId === extractedId ||
+                                               searchId === recordEmpId ||
+                                               searchId === recordName;
+                                
+                                if (matches) {
+                                    console.log(`✅ MATCH FOUND! Record:`, record);
+                                }
+                                
+                                return matches;
+                            });
+                            
+                            console.log(`🎯 Teacher record found for ${month}:`, teacherRecord);
+                            
+                            if (teacherRecord) {
+                                // Log all available fields in the teacher record
+                                console.log(`📋 All available fields in teacher record:`, Object.keys(teacherRecord));
+                                console.log(`📋 Complete teacher record data:`, teacherRecord);
+                                
+                                // Extract and calculate payment data from Firebase record
+                                const basicPay = parseFloat(teacherRecord.basicSalary || 0);
+                                const da = parseFloat(teacherRecord.da || 0);
+                                const hra = parseFloat(teacherRecord.hra || 0);
+                                const allowances = parseFloat(teacherRecord.allowances || 0);
+                                
+                                const pf = parseFloat(teacherRecord.pf || teacherRecord.epf || 0);
+                                const profTax = parseFloat(teacherRecord.professionalTax || teacherRecord.pt || 0);
+                                const incomeTax = parseFloat(teacherRecord.tds || 0);
+                                const lic = parseFloat(teacherRecord.lic || 0);
+                                const esi = parseFloat(teacherRecord.esi || 0);
+                                const ewFund = parseFloat(teacherRecord.ewFund || 0);
+                                
+                                // Calculate totals
+                                const calculatedGrossTotal = basicPay + da + hra + allowances;
+                                const calculatedTotalDeductions = pf + profTax + incomeTax + lic + esi + ewFund;
+                                const calculatedNetPay = calculatedGrossTotal - calculatedTotalDeductions;
+                                
+                                console.log(`💰 Payment calculations for ${teacherId}:`, {
+                                    basicPay, da, hra, allowances,
+                                    calculatedGrossTotal,
+                                    pf, profTax, incomeTax, lic, esi, ewFund,
+                                    calculatedTotalDeductions,
+                                    calculatedNetPay
+                                });
+                                
+                                // Convert to payslip format using actual paysheet column headers
+                                const payslip = {
+                                    id: `${month}_${teacherId}`,
+                                    month: month,
+                                    year: new Date().getFullYear().toString(),
+                                    monthNum: getMonthNumber(month),
+                                    payDate: monthData.uploadDate || new Date().toISOString(),
+                                    status: 'paid',
+                                    
+                                    // Map to actual paysheet column headers with proper calculations
+                                    payScale: teacherRecord.payScale || teacherRecord.pay_scale || '',
+                                    payBand: teacherRecord.payBand || teacherRecord.pay_band || '',
+                                    agp: parseFloat(teacherRecord.agp || teacherRecord.AGP || 0),
+                                    revisedBasicPay: basicPay,
+                                    da150: da, // D.A. 150%
+                                    hra30: hra, // H.R.A 30%
+                                    cla: parseFloat(teacherRecord.cla || teacherRecord.conveyance || 0), // C.L.A.
+                                    addAllowance: allowances, // Add. Allowance
+                                    grossTotal: parseFloat(teacherRecord.grossTotal || teacherRecord.grossSalary || calculatedGrossTotal),
+                                    grossSalary: parseFloat(teacherRecord.grossTotal || teacherRecord.grossSalary || calculatedGrossTotal), // Add grossSalary field
+                                    
+                                    // Deductions with proper mapping
+                                    profTax: profTax, // Prof. Tax
+                                    incomeTax: incomeTax, // Income Tax
+                                    pf: pf, // P.F.
+                                    lic: lic, // LIC
+                                    medicalInsurance: esi, // Medical Insurance
+                                    ewFund: ewFund, // EW Fund
+                                    totalDeductions: parseFloat(teacherRecord.totalDeductions || calculatedTotalDeductions),
+                                    
+                                    // Net salary with calculation fallback
+                                    netPay: parseFloat(teacherRecord.netSalary || teacherRecord.net_pay || calculatedNetPay),
+                                    
+                                    // Additional info
+                                    department: teacherRecord.department || '',
+                                    designation: teacherRecord.designation || '',
+                                    teacherName: teacherRecord.name || teacherRecord.teacherName || ''
+                                };
+                                
+                                console.log(`💰 Created payslip for ${month}:`, payslip);
+                                teacherPayslips.push(payslip);
+                            }
+                        } else {
+                            console.log(`⚠️ No records found for month ${month}`);
+                        }
+                    });
+                    
+                    console.log(`\n📊 SEARCH SUMMARY:`);
+                    console.log(`- Teacher ID searched: "${teacherId}"`);
+                    console.log(`- Total records checked: ${totalRecordsChecked}`);
+                    console.log(`- Payslips found: ${teacherPayslips.length}`);
+                    console.log(`- Final payslips:`, teacherPayslips);
+                    
+                    return teacherPayslips;
+                } else {
+                    console.warn('Firebase DB not available, using localStorage fallback');
+                    return JSON.parse(localStorage.getItem('salarySlips') || '[]');
+                }
+            } catch (error) {
+                console.error('Error fetching teacher payslips:', error);
+                return JSON.parse(localStorage.getItem('salarySlips') || '[]');
+            }
+        }
+        
+        // Helper function to get month number
+        function getMonthNumber(monthName) {
+            const months = {
+                'January': '01', 'February': '02', 'March': '03', 'April': '04',
+                'May': '05', 'June': '06', 'July': '07', 'August': '08',
+                'September': '09', 'October': '10', 'November': '11', 'December': '12'
+            };
+            return months[monthName] || '01';
+        }
+        
+        // Helper function to get initials
+        function getInitials(name) {
+            return name.split(' ').map(word => word.charAt(0)).join('').toUpperCase();
+        }
+        
+        // Load payslips for specific teacher
+        async function loadTeacherPayslips(teacherId) {
+            const payslips = await getTeacherPayslips(teacherId);
+            
+            // Store in a global variable for filtering
+            window.currentTeacherPayslips = payslips;
+            
+            // Load the payslips
+            loadPayslips(payslips);
+        }
+        
+        // Get payslips from current teacher data
+        function getPayslips() {
+            return window.currentTeacherPayslips || [];
+        }
+
+        // Mock teacher data
+        const teacherData = {
+            name: 'Dr. Sarah Johnson',
+            teacherId: 'TCH001',
+            designation: 'Associate Professor',
+            department: 'Department of Computer Science',
+            initials: 'SJ'
+        };
+
+        // Initialize dashboard with STRICT authentication
+        document.addEventListener('DOMContentLoaded', async function() {
+            // STRICT AUTH CHECK: Multiple validation layers
+            const isLoggedIn = sessionStorage.getItem('teacherLoggedIn');
+            const teacherId = sessionStorage.getItem('loggedInTeacherId');
+            const loginTime = sessionStorage.getItem('loginTime');
+            
+            // Check 1: Basic session validation
+            if (!isLoggedIn || !teacherId || !loginTime) {
+                console.log('❌ Authentication failed: Missing session data');
+                redirectToLogin();
+                return;
+            }
+            
+            // Check 2: Session timeout (24 hours)
+            const loginDate = new Date(loginTime);
+            const currentTime = new Date();
+            const timeDiff = currentTime - loginDate;
+            const hoursElapsed = timeDiff / (1000 * 60 * 60);
+            
+            if (hoursElapsed > 24) {
+                console.log('❌ Authentication failed: Session expired');
+                sessionStorage.clear();
+                redirectToLogin();
+                return;
+            }
+            
+            // Check 3: Validate teacher exists and is active in Firebase
+            try {
+                if (typeof firebase !== 'undefined' && firebase.apps.length > 0) {
+                    const teacherRef = firebase.database().ref(`teachers/${teacherId}`);
+                    const snapshot = await teacherRef.once('value');
+                    const teacher = snapshot.val();
+                    
+                    if (!teacher || teacher.status !== 'Active' || !teacher.approvedBy) {
+                        console.log('❌ Authentication failed: Teacher not active or approved');
+                        sessionStorage.clear();
+                        redirectToLogin();
+                        return;
+                    }
+                    
+                    console.log('✅ Authentication successful for:', teacher.name);
+                }
+            } catch (error) {
+                console.log('⚠️ Firebase validation failed, proceeding with localStorage check');
+            }
+            
+            await loadTeacherData();
+            setupEventListeners();
+        });
+        
+        // Redirect to login with message
+        function redirectToLogin() {
+            alert('Session expired or unauthorized access. Please login again.');
+            window.location.href = 'teacher_login.html';
+        }
+
+        // Load teacher data
+        async function loadTeacherData() {
+            try {
+                // Get logged in teacher ID from session storage
+                const loggedInTeacherId = sessionStorage.getItem('loggedInTeacherId');
+                const loggedInTeacherName = sessionStorage.getItem('loggedInTeacherName');
+                const loggedInTeacherDesignation = sessionStorage.getItem('loggedInTeacherDesignation');
+                const loggedInTeacherDepartment = sessionStorage.getItem('loggedInTeacherDepartment');
+                
+                if (loggedInTeacherId) {
+                    // Use session data from login
+                    const teacher = {
+                        name: loggedInTeacherName || 'Teacher Name',
+                        teacherId: loggedInTeacherId,
+                        designation: loggedInTeacherDesignation || 'Teacher',
+                        department: loggedInTeacherDepartment || 'Department',
+                        initials: getInitials(loggedInTeacherName || 'TN')
+                    };
+                    
+                    // Update teacher profile information
+                    updateTeacherProfile(teacher);
+                    
+                    // Load payslips for this specific teacher
+                    await loadTeacherPayslips(loggedInTeacherId);
+                } else {
+                    // Redirect to login if no teacher session found
+                    window.location.href = 'teacher_login.html';
+                }
+            } catch (error) {
+                console.error('Error loading teacher data:', error);
+                // Fallback to login
+                window.location.href = 'teacher_login.html';
+            }
+        }
+
+        // Update teacher profile information
+        function updateTeacherProfile(teacher) {
+            // Safely update elements if they exist
+            const elements = {
+                'teacher-name': teacher.name,
+                'teacher-id': `ID: ${teacher.teacherId}`,
+                'teacher-initials': teacher.initials,
+                'welcome-name': teacher.name,
+                'profile-name': teacher.name,
+                'profile-designation': teacher.designation,
+                'profile-department': teacher.department,
+                'profile-teacher-id': teacher.teacherId,
+                'profile-initials': teacher.initials
+            };
+            
+            Object.keys(elements).forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.textContent = elements[id];
+                }
+            });
+        }
+
+        // Load and display payslips
+        function loadPayslips(filteredData = null) {
+            const container = document.getElementById('payslips-container');
+            const loadingState = document.getElementById('loading-state');
+            const noResults = document.getElementById('no-results');
+
+            // Check if elements exist before accessing them
+            if (!container) {
+                console.warn('payslips-container not found, skipping payslip loading');
+                return;
+            }
+            if (!loadingState) {
+                console.warn('loading-state element not found, creating fallback');
+            }
+            if (!noResults) {
+                console.warn('no-results element not found, creating fallback');
+            }
+
+            // Show loading (only if elements exist)
+            if (loadingState) {
+                loadingState.classList.remove('hidden');
+            }
+            if (noResults) {
+                noResults.classList.add('hidden');
+            }
+
+            setTimeout(() => {
+                const payslips = filteredData || getPayslips();
+                console.log('Loading payslips:', payslips);
+                
+                if (payslips.length === 0) {
+                    container.innerHTML = '<div class="text-center py-8"><p class="text-gray-500">No payslips found for this teacher.</p></div>';
+                    if (loadingState) {
+                        loadingState.classList.add('hidden');
+                    }
+                    if (noResults) {
+                        noResults.classList.remove('hidden');
+                    }
+                    return;
+                }
+
+                try {
+                    const payslipCards = payslips.map(payslip => {
+                        console.log('Creating card for payslip:', payslip);
+                        return createPayslipCard(payslip);
+                    }).join('');
+                    
+                    container.innerHTML = payslipCards;
+                    console.log('Payslip cards added to container');
+                } catch (error) {
+                    console.error('Error creating payslip cards:', error);
+                    container.innerHTML = '<div class="text-center py-8"><p class="text-red-500">Error loading payslips. Please refresh the page.</p></div>';
+                }
+                
+                if (loadingState) {
+                    loadingState.classList.add('hidden');
+                }
+                if (noResults) {
+                    noResults.classList.add('hidden');
+                }
+            }, 800);
+        }
+
+        // Create payslip card HTML
+        function createPayslipCard(payslip) {
+            const statusClass = payslip.status === 'paid' ? 'status-success' : 'status-warning';
+            const statusText = payslip.status === 'paid' ? 'Paid' : 'Pending';
+
+            return `
+                <div class="glass-card p-6 shadow-elevation-1 hover:shadow-elevation-2 transition-shadow duration-200">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h4 class="text-lg font-semibold text-text-primary">${payslip.month} ${payslip.year}</h4>
+                            <p class="text-sm text-text-secondary font-caption">Pay Date: ${formatDate(payslip.payDate)}</p>
+                        </div>
+                        <span class="${statusClass}">${statusText}</span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div>
+                            <p class="text-xs text-text-secondary font-caption">Gross Salary</p>
+                            <p class="text-lg font-semibold text-text-primary font-data">₹${formatCurrency(payslip.grossSalary)}</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-text-secondary font-caption">Net Pay</p>
+                            <p class="text-lg font-semibold text-success-600 font-data">₹${formatCurrency(payslip.netPay)}</p>
+                        </div>
+                    </div>
+
+                    <div class="flex space-x-3">
+                        <button 
+                            onclick="viewPayslipDetails('${payslip.id}')"
+                            class="flex-1 btn-primary py-2 text-sm flex items-center justify-center space-x-2"
+                        >
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                            </svg>
+                            <span>View Details</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Logout functionality
+            document.getElementById('logout-btn').addEventListener('click', function() {
+                if (confirm('Are you sure you want to logout?')) {
+                    sessionStorage.clear();
+                    window.location.href = 'teacher_login.html';
+                }
+            });
+
+            // Filter functionality
+            document.getElementById('year-select').addEventListener('change', filterPayslips);
+            document.getElementById('month-select').addEventListener('change', filterPayslips);
+            document.getElementById('search-input').addEventListener('input', filterPayslips);
+            
+            // SECURITY: Periodic authentication check every 5 minutes
+            setInterval(validateActiveSession, 5 * 60 * 1000);
+            
+            // SECURITY: Check for tab visibility changes
+            document.addEventListener('visibilitychange', function() {
+                if (!document.hidden) {
+                    validateActiveSession();
+                }
+            });
+        }
+        
+        // Validate active session periodically
+        async function validateActiveSession() {
+            const teacherId = sessionStorage.getItem('loggedInTeacherId');
+            const loginTime = sessionStorage.getItem('loginTime');
+            
+            if (!teacherId || !loginTime) {
+                redirectToLogin();
+                return;
+            }
+            
+            // Check session timeout
+            const loginDate = new Date(loginTime);
+            const currentTime = new Date();
+            const hoursElapsed = (currentTime - loginDate) / (1000 * 60 * 60);
+            
+            if (hoursElapsed > 24) {
+                sessionStorage.clear();
+                redirectToLogin();
+                return;
+            }
+            
+            // Validate with Firebase
+            try {
+                if (typeof firebase !== 'undefined' && firebase.apps.length > 0) {
+                    const teacherRef = firebase.database().ref(`teachers/${teacherId}`);
+                    const snapshot = await teacherRef.once('value');
+                    const teacher = snapshot.val();
+                    
+                    if (!teacher || teacher.status !== 'Active') {
+                        sessionStorage.clear();
+                        alert('Your account has been deactivated. Please contact admin.');
+                        window.location.href = 'teacher_login.html';
+                        return;
+                    }
+                }
+            } catch (error) {
+                console.log('Session validation check failed');
+            }
+        }
+
+        // Filter payslips based on selected criteria
+        function filterPayslips() {
+            const selectedYear = document.getElementById('year-select').value;
+            const selectedMonth = document.getElementById('month-select').value;
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+
+            let filtered = getPayslips().filter(payslip => {
+                const matchesYear = !selectedYear || payslip.year === selectedYear;
+                const matchesMonth = !selectedMonth || payslip.monthNum === selectedMonth;
+                const matchesSearch = !searchTerm || 
+                    payslip.month.toLowerCase().includes(searchTerm) ||
+                    payslip.grossSalary.toString().includes(searchTerm) ||
+                    payslip.netPay.toString().includes(searchTerm);
+
+                return matchesYear && matchesMonth && matchesSearch;
+            });
+
+            loadPayslips(filtered);
+        }
+
+        // View payslip details
+        function viewPayslipDetails(payslipId) {
+            const payslip = getPayslips().find(p => p.id === payslipId);
+            if (!payslip) {
+                alert('Payslip not found');
+                return;
+            }
+            
+            // Create simple payslip format as per user's image
+            const detailsHTML = `
+                <div class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4" id="payslip-modal">
+                    <div class="bg-white rounded-lg shadow-xl flex flex-col border border-gray-300" style="width: 148mm; height: 210mm; max-height: 90vh; overflow: hidden;">
+                        <div class="flex-shrink-0 p-4 border-b border-gray-200">
+                            <div class="flex justify-between items-center">
+                                <h3 class="text-lg font-semibold text-gray-800">Salary Slip Details</h3>
+                                <button onclick="closePayslipModal()" class="text-gray-500 hover:text-gray-700 p-2">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Scrollable Content -->
+                        <div class="flex-1 overflow-y-auto p-4">
+                            <!-- Simple Salary Slip Format -->
+                            <div class="border-2 border-gray-400 p-3 bg-white" id="payslip-content" style="font-size: 13px;">
+                                <!-- Header -->
+                                <div class="text-center border-b-2 border-gray-400 pb-3 mb-4">
+                                    <!-- Logo -->
+                                    <div class="flex justify-center mb-3">
+                                        <img src="../public/bharati_logo.png" alt="Bharati Vidyapeeth Logo" class="h-16 w-auto">
+                                    </div>
+                                    <h1 class="text-lg font-bold mb-1">BHARATI VIDYAPEETH INSTITUTE OF TECHNOLOGY</h1>
+                                    <p class="text-sm mb-3">SECTOR 7 CBD, BELPADA, OPP KHARGHAR RAILWAY STATION NAVI MUMBAI</p>
+                                    <h2 class="text-base font-semibold">Salary Slip for ${payslip.month} ${payslip.year}</h2>
+                                </div>
+                                
+                                <!-- Employee Details -->
+                                <div class="grid grid-cols-2 gap-2 mb-2" style="font-size: 12px;">
+                                    <div class="space-y-1">
+                                        <div class="flex">
+                                            <span class="w-24 font-medium">Name</span>
+                                            <span>${getCurrentTeacherName()}</span>
+                                        </div>
+                                        <div class="flex">
+                                            <span class="w-24 font-medium">Emp. No</span>
+                                            <span>${getCurrentTeacherId()}</span>
+                                        </div>
+                                        <div class="flex">
+                                            <span class="w-24 font-medium">Designation</span>
+                                            <span>${getCurrentTeacherDesignation()}</span>
+                                        </div>
+                                    </div>
+                                    <div class="space-y-1">
+                                        <div class="flex">
+                                            <span class="w-24 font-medium">Department</span>
+                                            <span>${getCurrentTeacherDepartment()}</span>
+                                        </div>
+                                        <div class="flex">
+                                            <span class="w-24 font-medium">Pay Scale</span>
+                                            <span>${payslip.payScale || ''}</span>
+                                        </div>
+                                        <div class="flex">
+                                            <span class="w-24 font-medium">Pay Band</span>
+                                            <span>${payslip.payBand || ''}</span>
+                                        </div>
+                                        <div class="flex">
+                                            <span class="w-24 font-medium">A.G.P</span>
+                                            <span>${payslip.agp ? '₹' + formatCurrency(payslip.agp) : ''}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Earnings and Deductions Table -->
+                                <div class="grid grid-cols-2 gap-0 border-t-2 border-gray-400">
+                                    <!-- Earnings -->
+                                    <div class="border-r border-gray-400">
+                                        <div class="bg-gray-100 text-center font-bold py-1 border-b border-gray-400" style="font-size: 13px;">Earnings</div>
+                                        <div class="p-1" style="font-size: 12px;">
+                                            <div class="flex justify-between">
+                                                <span class="font-medium">Revised Basic Pay</span>
+                                                <span class="font-bold">₹${formatCurrency(payslip.revisedBasicPay)}</span>
+                                            </div>
+                                            <div class="flex justify-between">
+                                                <span class="font-medium">D.A. 150%</span>
+                                                <span class="font-bold">₹${formatCurrency(payslip.da150)}</span>
+                                            </div>
+                                            <div class="flex justify-between">
+                                                <span class="font-medium">H.R.A 30%</span>
+                                                <span class="font-bold">₹${formatCurrency(payslip.hra30)}</span>
+                                            </div>
+                                            <div class="flex justify-between">
+                                                <span class="font-medium">C.L.A.</span>
+                                                <span class="font-bold">₹${formatCurrency(payslip.cla)}</span>
+                                            </div>
+                                            <div class="flex justify-between">
+                                                <span class="font-medium">Add. Allowance</span>
+                                                <span class="font-bold">₹${formatCurrency(payslip.addAllowance)}</span>
+                                            </div>
+                                            <div class="flex justify-between font-bold border-t border-gray-400 pt-1" style="font-size: 13px;">
+                                                <span>Gross Total</span>
+                                                <span>₹${formatCurrency(payslip.grossTotal)}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Deductions -->
+                                    <div>
+                                        <div class="bg-gray-100 text-center font-bold py-1 border-b border-gray-400" style="font-size: 13px;">Deductions</div>
+                                        <div class="p-1" style="font-size: 12px;">
+                                            <div class="flex justify-between">
+                                                <span class="font-medium">Prof. Tax</span>
+                                                <span class="font-bold">₹${formatCurrency(payslip.profTax)}</span>
+                                            </div>
+                                            <div class="flex justify-between">
+                                                <span class="font-medium">Income Tax</span>
+                                                <span class="font-bold">₹${formatCurrency(payslip.incomeTax)}</span>
+                                            </div>
+                                            <div class="flex justify-between">
+                                                <span class="font-medium">P.F.</span>
+                                                <span class="font-bold">₹${formatCurrency(payslip.pf)}</span>
+                                            </div>
+                                            <div class="flex justify-between">
+                                                <span class="font-medium">LIC</span>
+                                                <span class="font-bold">₹${formatCurrency(payslip.lic)}</span>
+                                            </div>
+                                            <div class="flex justify-between">
+                                                <span class="font-medium">Medical Insur.</span>
+                                                <span class="font-bold">₹${formatCurrency(payslip.medicalInsurance)}</span>
+                                            </div>
+                                            <div class="flex justify-between">
+                                                <span class="font-medium">EW Fund</span>
+                                                <span class="font-bold">₹${formatCurrency(payslip.ewFund)}</span>
+                                            </div>
+                                            <div class="flex justify-between font-bold border-t border-gray-400 pt-1" style="font-size: 13px;">
+                                                <span>Total Deductions</span>
+                                                <span>₹${formatCurrency(payslip.totalDeductions)}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Net Pay -->
+                                <div class="border-t-2 border-gray-400 grid grid-cols-2">
+                                    <div class="text-center font-bold py-2 border-r border-gray-400" style="font-size: 15px;">Net Pay</div>
+                                    <div class="text-center font-bold py-2" style="font-size: 15px;">₹${formatCurrency(payslip.netPay)}</div>
+                                </div>
+                                
+                                <!-- Amount in Words -->
+                                <div class="border-t border-gray-400 p-2" style="font-size: 12px;">
+                                    <span class="font-semibold">Amount in Words:</span>
+                                    <span class="font-medium">${numberToWords(payslip.netPay)}</span>
+                                </div>
+                                
+                                <!-- Signatures -->
+                                <div class="border-t border-gray-400 grid grid-cols-2 gap-2 p-2 mt-2">
+                                    <div class="text-center">
+                                        <div class="h-8 mb-1"></div>
+                                        <div class="border-t border-gray-400 pt-1">
+                                            <span style="font-size: 11px; font-weight: 500;">Principal Signature</span>
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="h-8 mb-1"></div>
+                                        <div class="border-t border-gray-400 pt-1">
+                                            <span style="font-size: 11px; font-weight: 500;">Clerk Signature</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            
+                        
+                        <!-- Action Buttons -->
+                        <div class="flex-shrink-0 p-4 border-t border-gray-200 no-print">
+                            <div class="flex gap-3">
+                                <button type="button" onclick="printCurrentPayslip()" class="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                                    <svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+                                    </svg>
+                                    Print Payslip
+                                </button>
+                                <button onclick="closePayslipModal()" class="flex-1 bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors">
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Add modal to page
+            document.body.insertAdjacentHTML('beforeend', detailsHTML);
+        }
+        
+        // Close payslip modal
+        function closePayslipModal() {
+            const modal = document.getElementById('payslip-modal');
+            if (modal) {
+                modal.remove();
+            }
+        }
+        
+
+        // Utility functions
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('en-IN').format(amount);
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-IN', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
+        }
+
+        // Completely disable authentication check
+        function skipAuthCheck() {
+            console.log('Authentication check completely disabled');
+            return;
+        }
+        
+        // Load teacher data from Firebase
+        async function loadTeacherDataDirectly() {
+            console.log('Loading teacher data from Firebase');
+            
+            try {
+                // Initialize Firebase if not already initialized
+                if (!firebase.apps.length) {
+                    firebase.initializeApp(firebaseConfig);
+                }
+                
+                // Check authentication state first
+                const user = firebase.auth().currentUser;
+                console.log('Current Firebase Auth user:', user);
+                
+                if (!user) {
+                    console.log('No authenticated user - attempting to sign in first');
+                    // Try to get teacher credentials from sessionStorage
+                    const teacherEmail = sessionStorage.getItem('loggedInTeacherEmail');
+                    const teacherUID = sessionStorage.getItem('loggedInTeacherUID');
+                    
+                    if (!teacherEmail || !teacherUID) {
+                        console.error('No teacher credentials in session - redirecting to login');
+                        window.location.href = 'teacher_login.html';
+                        return;
+                    }
+                    
+                    // Wait for authentication state to be established
+                    await new Promise((resolve) => {
+                        const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+                            if (user) {
+                                console.log('Auth state established:', user.uid);
+                                unsubscribe();
+                                resolve();
+                            }
+                        });
+                    });
+                }
+                
+                const loggedInTeacherId = sessionStorage.getItem('loggedInTeacherId');
+                
+                if (loggedInTeacherId) {
+                    console.log('Attempting to load teacher data for:', loggedInTeacherId);
+                    // Load teacher data from Firebase
+                    const teacherRef = firebase.database().ref(`teachers/${loggedInTeacherId}`);
+                    const snapshot = await teacherRef.once('value');
+                    const currentTeacher = snapshot.val();
+                    
+                    if (currentTeacher) {
+                        // Update profile with Firebase teacher data
+                        updateTeacherProfile({
+                            name: currentTeacher.name,
+                            teacherId: currentTeacher.id,
+                            designation: currentTeacher.designation || 'Teacher',
+                            department: currentTeacher.department || 'Department',
+                            initials: getInitials(currentTeacher.name)
+                        });
+                        
+                        console.log('Loaded teacher profile from Firebase:', currentTeacher.name);
+                    }
+                } else {
+                    // Fallback to localStorage
+                    const teachers = JSON.parse(localStorage.getItem('teachers')) || [];
+                    const currentTeacher = teachers.find(t => t.id === loggedInTeacherId);
+                    
+                    if (currentTeacher) {
+                        updateTeacherProfile({
+                            name: currentTeacher.name,
+                            teacherId: currentTeacher.id,
+                            designation: currentTeacher.designation || 'Teacher',
+                            department: currentTeacher.department || 'Department',
+                            initials: getInitials(currentTeacher.name)
+                        });
+                    }
+                }
+                
+                // Load approved payslips instead of old payslips
+                await loadApprovedPayslips();
+                
+            } catch (error) {
+                console.error('Error loading teacher data:', error);
+                // Fallback to localStorage
+                loadPayslips();
+            }
+        }
+        
+        // Payslip Request Form Handler
+        document.getElementById('payslip-request-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const month = document.getElementById('request-month').value;
+            const purpose = document.getElementById('request-purpose').value;
+            const loggedInTeacherId = sessionStorage.getItem('loggedInTeacherId') || 'N013';
+            
+            if (!month || !purpose) {
+                alert('कृपया month आणि purpose निवडा!');
+                return;
+            }
+            
+            try {
+                // Create payslip request object
+                const requestData = {
+                    id: Date.now().toString(),
+                    teacherId: loggedInTeacherId,
+                    teacherName: document.getElementById('profile-name').textContent,
+                    month: month,
+                    purpose: purpose,
+                    status: 'Pending',
+                    requestDate: new Date().toISOString(),
+                    approvedBy: null,
+                    approvalDate: null
+                };
+                
+                // Save to Firebase
+                if (typeof firebase !== 'undefined') {
+                    const requestRef = firebase.database().ref('payslipRequests').push();
+                    await requestRef.set(requestData);
+                    console.log('✅ Payslip request saved to Firebase');
+                } else {
+                    // Fallback to localStorage
+                    const existingRequests = JSON.parse(localStorage.getItem('payslipRequests') || '[]');
+                    existingRequests.push(requestData);
+                    localStorage.setItem('payslipRequests', JSON.stringify(existingRequests));
+                    console.log('✅ Payslip request saved to localStorage');
+                }
+                
+                // Show success message
+                document.getElementById('request-status').classList.remove('hidden');
+                
+                // Reset form
+                document.getElementById('payslip-request-form').reset();
+                
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    document.getElementById('request-status').classList.add('hidden');
+                }, 5000);
+                
+                console.log(`📋 Payslip request sent: ${month} for ${purpose}`);
+                
+            } catch (error) {
+                console.error('Error sending payslip request:', error);
+                alert('Request पाठवताना error आली. कृपया पुन्हा try करा.');
+            }
+        });
+
+        // Page load handler - NO AUTH CHECK
+        window.addEventListener('load', function() {
+            console.log('Page loaded - skipping all auth checks');
+            loadTeacherDataDirectly();
+        });
+        
+        // Load approved payslip requests and show payslips
+        async function loadApprovedPayslips() {
+            try {
+                const loggedInTeacherId = sessionStorage.getItem('loggedInTeacherId') || 'N013';
+                
+                // Get approved payslip requests for this teacher
+                const requestsRef = firebase.database().ref('payslipRequests');
+                const query = requestsRef.orderByChild('teacherId').equalTo(loggedInTeacherId);
+                const snapshot = await query.once('value');
+                const requests = snapshot.val();
+                
+                const payslipsContainer = document.getElementById('payslips-container');
+                
+                if (!requests) {
+                    payslipsContainer.innerHTML = `
+                        <div class="glass-card p-8 text-center">
+                            <div class="w-16 h-16 bg-secondary-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-secondary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-medium text-text-primary mb-2">No Payslips Available</h3>
+                            <p class="text-text-secondary font-caption mb-4">Request payslips using the form above.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                const approvedRequests = Object.values(requests).filter(request => 
+                    request.status === 'Approved'
+                );
+                
+                if (approvedRequests.length === 0) {
+                    payslipsContainer.innerHTML = `
+                        <div class="glass-card p-8 text-center">
+                            <div class="w-16 h-16 bg-warning-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-warning-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-medium text-text-primary mb-2">No Approved Payslips</h3>
+                            <p class="text-text-secondary font-caption mb-4">Your payslip requests are pending admin approval.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Display approved payslips
+                payslipsContainer.innerHTML = approvedRequests.map(request => `
+                    <div class="glass-card p-6 shadow-elevation-1 hover-lift">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h4 class="text-lg font-semibold text-text-primary">${request.month} 2025</h4>
+                                <p class="text-sm text-text-secondary font-caption">${request.purpose}</p>
+                            </div>
+                            <span class="px-2 py-1 bg-success-100 text-success-800 text-xs font-medium rounded-full">
+                                Approved
+                            </span>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4 mb-4 text-sm">
+                            <div>
+                                <p class="text-text-secondary font-caption">Approved Date</p>
+                                <p class="font-medium text-text-primary">${new Date(request.approvalDate).toLocaleDateString()}</p>
+                            </div>
+                            <div>
+                                <p class="text-text-secondary font-caption">Approved By</p>
+                                <p class="font-medium text-text-primary">${request.approvedBy}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex space-x-3">
+                            <button onclick="viewPayslip('${request.id}', '${request.month}', '${request.purpose}')" 
+                                class="flex-1 btn-primary text-sm py-2">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                </svg>
+                                View Payslip
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+                
+                console.log(`✅ Loaded ${approvedRequests.length} approved payslips`);
+                
+            } catch (error) {
+                console.error('Error loading approved payslips:', error);
+                document.getElementById('payslips-container').innerHTML = `
+                    <div class="glass-card p-8 text-center">
+                        <p class="text-error-600">Error loading payslips. Please refresh the page.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // View payslip function
+        function viewPayslip(requestId, month, purpose) {
+            const teacherName = document.getElementById('profile-name').textContent;
+            const teacherId = sessionStorage.getItem('loggedInTeacherId') || 'N013';
+            
+            // Generate sample payslip data
+            const payslipData = {
+                teacherName: teacherName,
+                teacherId: teacherId,
+                month: month,
+                purpose: purpose,
+                basicSalary: '₹45,000',
+                hra: '₹18,000',
+                da: '₹9,000',
+                grossSalary: '₹72,000',
+                pf: '₹5,400',
+                tds: '₹3,600',
+                netSalary: '₹63,000'
+            };
+            
+            // Show payslip modal
+            showPayslipModal(payslipData);
+        }
+
+
+        // Show payslip modal
+        function showPayslipModal(data) {
+            const modal = document.createElement('div');
+            modal.id = 'payslip-modal';
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4';
+            modal.innerHTML = `
+                <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+                    <div class="p-6" id="payslip-content">
+                        <div class="text-center mb-6">
+                            <h2 class="text-2xl font-bold text-text-primary">BVIT SALARY SLIP</h2>
+                            <p class="text-text-secondary">${data.month} 2025 • Purpose: ${data.purpose}</p>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <h3 class="font-semibold text-text-primary mb-2">Employee Details</h3>
+                                <p><strong>Name:</strong> ${data.teacherName}</p>
+                                <p><strong>ID:</strong> ${data.teacherId}</p>
+                                <p><strong>Purpose:</strong> ${data.purpose}</p>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-text-primary mb-2">Pay Period</h3>
+                                <p><strong>Month:</strong> ${data.month} 2025</p>
+                                <p><strong>Generated:</strong> ${new Date().toLocaleDateString()}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="border-t border-b py-4 mb-4">
+                            <h3 class="font-semibold text-text-primary mb-4">Salary Breakdown</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <h4 class="font-medium text-success-600 mb-2">Earnings</h4>
+                                    <div class="space-y-1 text-sm">
+                                        <div class="flex justify-between">
+                                            <span>Basic Salary:</span>
+                                            <span>${data.basicSalary}</span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span>HRA:</span>
+                                            <span>${data.hra}</span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span>DA:</span>
+                                            <span>${data.da}</span>
+                                        </div>
+                                        <div class="flex justify-between font-semibold border-t pt-1">
+                                            <span>Gross Salary:</span>
+                                            <span>${data.grossSalary}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-error-600 mb-2">Deductions</h4>
+                                    <div class="space-y-1 text-sm">
+                                        <div class="flex justify-between">
+                                            <span>PF:</span>
+                                            <span>${data.pf}</span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span>TDS:</span>
+                                            <span>${data.tds}</span>
+                                        </div>
+                                        <div class="flex justify-between font-semibold border-t pt-1">
+                                            <span>Total Deductions:</span>
+                                            <span>₹9,000</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="bg-primary-50 p-4 rounded-lg">
+                                <h3 class="font-bold text-lg text-primary">Net Salary: ${data.netSalary}</h3>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex space-x-3 p-6 border-t no-print">
+                        <button onclick="window.print()" class="flex-1 btn-primary">
+                            <svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+                            </svg>
+                            Print Payslip
+                        </button>
+                        <button onclick="closePayslipModal()" class="flex-1 btn-secondary">Close</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        // Close payslip modal
+        function closePayslipModal() {
+            const modal = document.getElementById('payslip-modal');
+            if (modal) {
+                modal.remove();
+            }
+        }
+
+        // Load payslips from Firebase database
+        async function loadPayslipsFromFirebase() {
+            try {
+                const loggedInTeacherId = sessionStorage.getItem('loggedInTeacherId');
+                
+                if (!loggedInTeacherId) {
+                    console.log('No teacher ID found in session');
+                    return;
+                }
+                
+                // Get salary slips for this teacher from Firebase
+                const salarySlipsRef = firebase.database().ref('salarySlips');
+                const query = salarySlipsRef.orderByChild('teacherId').equalTo(loggedInTeacherId);
+                const snapshot = await query.once('value');
+                const salarySlips = snapshot.val();
+                
+                const payslipsContainer = document.getElementById('payslips-container');
+                
+                if (!salarySlips) {
+                    payslipsContainer.innerHTML = `
+                        <div class="glass-card p-8 text-center">
+                            <div class="w-16 h-16 bg-secondary-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-secondary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-medium text-text-primary mb-2">No Payslips Available</h3>
+                            <p class="text-text-secondary">Your salary slips will appear here once they are generated by the admin.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Convert to array and sort by date (newest first)
+                const payslipsList = Object.values(salarySlips).sort((a, b) => {
+                    const dateA = new Date(a.year, a.monthNum - 1);
+                    const dateB = new Date(b.year, b.monthNum - 1);
+                    return dateB - dateA;
+                });
+                
+                // Generate payslip cards
+                payslipsContainer.innerHTML = payslipsList.map(payslip => createPayslipCard(payslip)).join('');
+                
+                console.log(`✅ Loaded ${payslipsList.length} payslips from Firebase for teacher ${loggedInTeacherId}`);
+                
+            } catch (error) {
+                console.error('Error loading payslips from Firebase:', error);
+                
+                // Fallback to localStorage
+                loadPayslips();
+            }
+        }
+
+        // Helper function to get initials from name
+        function getInitials(name) {
+            return name.split(' ').map(n => n.charAt(0)).join('').toUpperCase();
+        }
+        
+        // Print current payslip from modal
+        function printCurrentPayslip() {
+            window.print();
+        }
+
+        // Helper functions to get current teacher data
+        function getCurrentTeacherName() {
+            const teachers = JSON.parse(localStorage.getItem('teachers')) || [];
+            const loggedInTeacherId = sessionStorage.getItem('loggedInTeacherId');
+            const currentTeacher = teachers.find(t => t.id === loggedInTeacherId);
+            return currentTeacher ? currentTeacher.name : 'Teacher Name';
+        }
+        
+        function getCurrentTeacherId() {
+            return sessionStorage.getItem('loggedInTeacherId') || 'IT002';
+        }
+        
+        function getCurrentTeacherDesignation() {
+            const teachers = JSON.parse(localStorage.getItem('teachers')) || [];
+            const loggedInTeacherId = sessionStorage.getItem('loggedInTeacherId');
+            const currentTeacher = teachers.find(t => t.id === loggedInTeacherId);
+            return currentTeacher ? (currentTeacher.designation || 'Assistant Professor') : 'Assistant Professor';
+        }
+        
+        function getCurrentTeacherDepartment() {
+            const teachers = JSON.parse(localStorage.getItem('teachers')) || [];
+            const loggedInTeacherId = sessionStorage.getItem('loggedInTeacherId');
+            const currentTeacher = teachers.find(t => t.id === loggedInTeacherId);
+            return currentTeacher ? (currentTeacher.department || 'Computer Engineering') : 'Computer Engineering';
+        }
+    </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>

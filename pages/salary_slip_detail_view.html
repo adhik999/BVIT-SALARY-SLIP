@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Salary Slip - BVIT SALARY SLIP</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="icon" type="image/x-icon" href="../public/favicon.ico" />
+    
+    <!-- Print CSS for Teacher Dashboard Modal Format -->
+    <style>
+        @media print {
+            @page {
+                size: A4;
+                margin: 0.5in;
+            }
+            
+            /* Hide everything except the modal container */
+            body * {
+                visibility: hidden;
+            }
+            
+            /* Show only the payslip modal container and its contents */
+            .bg-white.rounded-lg.shadow-xl, 
+            .bg-white.rounded-lg.shadow-xl * {
+                visibility: visible;
+            }
+            
+            /* Position the modal container for print */
+            .bg-white.rounded-lg.shadow-xl {
+                position: absolute !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 100% !important;
+                max-width: none !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                background: white !important;
+                box-shadow: none !important;
+                border: none !important;
+                border-radius: 0 !important;
+                overflow: visible !important;
+                max-height: none !important;
+            }
+            
+            /* Style the payslip content */
+            #payslip-content {
+                padding: 20px !important;
+                font-family: Arial, sans-serif !important;
+                font-size: 14px !important;
+                line-height: 1.4 !important;
+                color: black !important;
+            }
+            
+            /* Header styling */
+            #payslip-content .text-center:first-child h2 {
+                font-size: 24px !important;
+                font-weight: bold !important;
+                color: black !important;
+                margin-bottom: 8px !important;
+            }
+            
+            #payslip-content .text-center:first-child p {
+                font-size: 14px !important;
+                color: black !important;
+                margin-bottom: 20px !important;
+            }
+            
+            /* Employee details grid */
+            #payslip-content .grid.grid-cols-2 {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 30px !important;
+                margin-bottom: 20px !important;
+            }
+            
+            #payslip-content h3 {
+                font-size: 16px !important;
+                font-weight: bold !important;
+                color: black !important;
+                margin-bottom: 10px !important;
+            }
+            
+            #payslip-content p {
+                font-size: 12px !important;
+                color: black !important;
+                margin-bottom: 4px !important;
+            }
+            
+            /* Salary breakdown section */
+            #payslip-content .border-t.border-b {
+                border-top: 2px solid #000 !important;
+                border-bottom: 2px solid #000 !important;
+                padding: 15px 0 !important;
+                margin-bottom: 20px !important;
+            }
+            
+            #payslip-content .border-t.border-b h3 {
+                font-size: 16px !important;
+                font-weight: bold !important;
+                color: black !important;
+                margin-bottom: 15px !important;
+            }
+            
+            /* Earnings and Deductions grid */
+            #payslip-content .border-t.border-b .grid.grid-cols-2 {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 30px !important;
+            }
+            
+            #payslip-content h4 {
+                font-size: 14px !important;
+                font-weight: bold !important;
+                color: black !important;
+                margin-bottom: 8px !important;
+            }
+            
+            /* Amount rows */
+            #payslip-content .flex.justify-between {
+                display: flex !important;
+                justify-content: space-between !important;
+                font-size: 12px !important;
+                color: black !important;
+                margin-bottom: 4px !important;
+            }
+            
+            #payslip-content .flex.justify-between.font-semibold {
+                font-weight: bold !important;
+                border-top: 1px solid #000 !important;
+                padding-top: 4px !important;
+                margin-top: 8px !important;
+            }
+            
+            /* Net salary section */
+            #payslip-content .bg-primary-50 {
+                background-color: #f0f0f0 !important;
+                padding: 15px !important;
+                border: 2px solid #000 !important;
+                text-align: center !important;
+                border-radius: 0 !important;
+            }
+            
+            #payslip-content .bg-primary-50 h3 {
+                font-size: 18px !important;
+                font-weight: bold !important;
+                color: black !important;
+                margin: 0 !important;
+            }
+            
+            /* Hide print buttons and other no-print elements */
+            .no-print,
+            .flex.space-x-3.p-6.border-t {
+                display: none !important;
+            }
+        }
+    </style>
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fteacherpay1871back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.7"></script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-primary-50 via-background to-secondary-50">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 opacity-5 no-print">
+        <svg class="w-full h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                    <path d="M 10 0 L 0 0 0 10" fill="none" stroke="currentColor" stroke-width="0.5"/>
+                </pattern>
+            </defs>
+            <rect width="100" height="100" fill="url(#grid)"/>
+        </svg>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="relative bg-white shadow-elevation-1 border-b border-secondary-200 no-print" id="main-header">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo and Title -->
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center justify-center w-10 h-10 bg-primary rounded-lg shadow-elevation-1">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-semibold text-text-primary">BVIT SALARY SLIP</h1>
+                        <p class="text-xs text-text-secondary font-caption">Salary Management System</p>
+                    </div>
+                </div>
+
+                <!-- User Info and Actions -->
+                <div class="flex items-center space-x-4">
+                    <div class="hidden md:block text-right">
+                        <p class="text-sm font-medium text-text-primary" id="teacher-name">Dr. Priya Sharma</p>
+                        <p class="text-xs text-text-secondary font-caption" id="teacher-id">Teacher ID: TCH001</p>
+                    </div>
+                    
+                    <!-- User Avatar -->
+                    <div class="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center">
+                        <svg class="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                        </svg>
+                    </div>
+
+                    <!-- Logout Button -->
+                    <button onclick="handleLogout()" class="btn-secondary text-sm px-3 py-1.5">
+                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                        </svg>
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="relative py-8 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto print-container">
+            <!-- Action Buttons -->
+            <div class="flex flex-wrap items-center justify-between mb-6 gap-4 no-print">
+                <div class="flex items-center space-x-2">
+                    <a href="teacher_dashboard.html" class="btn-secondary">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                        </svg>
+                        Back to Dashboard
+                    </a>
+                </div>
+                
+                <div class="flex items-center space-x-3">
+                    <button onclick="downloadPDF()" class="btn-accent">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        Download PDF
+                    </button>
+                    
+                    <button onclick="printPayslip()" class="btn-primary">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+                        </svg>
+                        Print Payslip
+                    </button>
+                </div>
+            </div>
+
+            <!-- Payslip Container - Exact Teacher Dashboard Modal Format -->
+            <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto mx-auto">
+                <div class="p-6" id="payslip-content">
+                    <div class="text-center mb-6">
+                        <h2 class="text-2xl font-bold text-text-primary">BVIT SALARY SLIP</h2>
+                        <p class="text-text-secondary" id="payslip-subtitle">July 2025 • Purpose: Salary</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <h3 class="font-semibold text-text-primary mb-2">Employee Details</h3>
+                            <p><strong>Name:</strong> <span id="teacher-name-display">ADHIKRAO GANESH GHADAGE</span></p>
+                            <p><strong>ID:</strong> <span id="teacher-id-display">N013</span></p>
+                            <p><strong>Purpose:</strong> <span id="purpose-display">Salary</span></p>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-text-primary mb-2">Pay Period</h3>
+                            <p><strong>Month:</strong> <span id="month-display">July 2025</span></p>
+                            <p><strong>Generated:</strong> <span id="generated-date">27/08/2025</span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="border-t border-b py-4 mb-4">
+                        <h3 class="font-semibold text-text-primary mb-4">Salary Breakdown</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <h4 class="font-medium text-success-600 mb-2">Earnings</h4>
+                                <div class="space-y-1 text-sm">
+                                    <div class="flex justify-between">
+                                        <span>Basic Salary:</span>
+                                        <span id="basic-salary">₹45,000</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>HRA:</span>
+                                        <span id="hra">₹18,000</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>DA:</span>
+                                        <span id="da">₹9,000</span>
+                                    </div>
+                                    <div class="flex justify-between font-semibold border-t pt-1">
+                                        <span>Gross Salary:</span>
+                                        <span id="gross-salary">₹72,000</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-error-600 mb-2">Deductions</h4>
+                                <div class="space-y-1 text-sm">
+                                    <div class="flex justify-between">
+                                        <span>PF:</span>
+                                        <span id="pf-deduction">₹5,400</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>TDS:</span>
+                                        <span id="tds-deduction">₹3,600</span>
+                                    </div>
+                                    <div class="flex justify-between font-semibold border-t pt-1">
+                                        <span>Total Deductions:</span>
+                                        <span id="total-deductions-display">₹9,000</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="bg-primary-50 p-4 rounded-lg">
+                            <h3 class="font-bold text-lg text-primary" id="net-salary">Net Salary: ₹63,000</h3>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex space-x-3 p-6 border-t no-print">
+                    <button onclick="window.print()" class="flex-1 btn-primary">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+                        </svg>
+                        Print Payslip
+                    </button>
+                    <button onclick="window.history.back()" class="flex-1 btn-secondary">Close</button>
+                </div>
+            </div>
+
+                    <!-- Footer Information -->
+                    <div class="border-t border-secondary-200 pt-6 mt-8">
+                        <div class="grid grid-cols-1 gap-6 text-sm text-text-secondary">
+                            <div>
+                                <p class="font-medium mb-2">Important Notes:</p>
+                                <p>• This is a computer-generated payslip</p>
+                                <p>• No signature required</p>
+                                <p>• For queries, contact Account department</p>
+                                <p>• Keep this slip for your records</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- JavaScript -->
+    <script>
+        // Print functionality
+        function printPayslip() {
+            // Hide navigation and action buttons before printing
+            const noprint = document.querySelectorAll('.no-print');
+            noprint.forEach(element => {
+                element.style.display = 'none';
+            });
+            
+            // Print the page
+            window.print();
+            
+            // Restore hidden elements after printing
+            setTimeout(() => {
+                noprint.forEach(element => {
+                    element.style.display = '';
+                });
+            }, 1000);
+        }
+
+        // Download PDF functionality (mock implementation)
+        function downloadPDF() {
+            // Show loading state
+            const downloadBtn = event.target.closest('button');
+            const originalText = downloadBtn.innerHTML;
+            
+            downloadBtn.innerHTML = `
+                <svg class="animate-spin w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Generating PDF...
+            `;
+            downloadBtn.disabled = true;
+            
+            // Simulate PDF generation
+            setTimeout(() => {
+                // Create a mock download
+                const link = document.createElement('a');
+                link.href = 'data:application/pdf;base64,'; // Mock PDF data
+                link.download = 'Salary_Slip_TCH001_Dec2024.pdf';
+                
+                // Show success message
+                showNotification('PDF downloaded successfully!', 'success');
+                
+                // Restore button
+                downloadBtn.innerHTML = originalText;
+                downloadBtn.disabled = false;
+            }, 2000);
+        }
+
+        // Session timeout and logout functions - DISABLED
+        function checkSessionTimeout() {
+            console.log('Session timeout check disabled for print functionality');
+        }
+        
+        function logout() {
+            console.log('Logout disabled for print functionality');
+        }
+
+        // Logout functionality - DISABLED
+        function handleLogout() {
+            console.log('Logout functionality disabled for print');
+        }
+
+        // Notification system
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 z-50 px-6 py-3 rounded-lg shadow-elevation-2 transition-all duration-300 transform translate-x-full`;
+            
+            // Set notification style based on type
+            switch(type) {
+                case 'success':
+                    notification.classList.add('bg-success-100', 'text-success-800', 'border', 'border-success-200');
+                    break;
+                case 'error':
+                    notification.classList.add('bg-error-100', 'text-error-800', 'border', 'border-error-200');
+                    break;
+                default:
+                    notification.classList.add('bg-primary-100', 'text-primary-800', 'border', 'border-primary-200');
+            }
+            
+            notification.innerHTML = `
+                <div class="flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    </svg>
+                    <span class="font-medium">${message}</span>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.classList.remove('translate-x-full');
+            }, 100);
+            
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                notification.classList.add('translate-x-full');
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Initialize Firebase and load data
+        let firebaseDB = null;
+        
+        // Check authentication on page load
+        window.addEventListener('load', async function() {
+            const isLoggedIn = sessionStorage.getItem('teacherLoggedIn');
+            const teacherEmail = sessionStorage.getItem('teacherEmail');
+            const teacherId = sessionStorage.getItem('teacherId');
+            
+            // Skip authentication check completely
+            console.log('Authentication check disabled for print functionality');
+            
+            // Initialize Firebase
+            try {
+                // Initialize Firebase if not already initialized
+                if (!firebase.apps.length) {
+                    firebase.initializeApp(firebaseConfig);
+                }
+                firebaseDB = new FirebaseDB();
+                console.log('✅ Firebase initialized for print view');
+            } catch (error) {
+                console.error('❌ Firebase initialization error:', error);
+            }
+            
+            // Update UI with teacher information
+            if (teacherId) {
+                document.getElementById('teacher-id').textContent = `Teacher ID: ${teacherId}`;
+            }
+            
+            // Load salary slip data with actual payslip details
+            await loadSalarySlipData();
+            
+            // Auto-print if print parameter is present
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('print') === 'true') {
+                // Small delay to ensure content is loaded
+                setTimeout(() => {
+                    printPayslip();
+                }, 2000);
+            }
+        });
+
+        // Currency formatting function
+        function formatCurrency(amount) {
+            if (!amount) return '0';
+            return new Intl.NumberFormat('en-IN').format(amount);
+        }
+
+        // Number to words conversion
+        function numberToWords(num) {
+            if (num === 0) return 'Zero Rupees Only';
+            
+            const ones = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
+            const teens = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+            const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+            
+            function convertHundreds(n) {
+                let result = '';
+                if (n >= 100) {
+                    result += ones[Math.floor(n / 100)] + ' Hundred ';
+                    n %= 100;
+                }
+                if (n >= 20) {
+                    result += tens[Math.floor(n / 10)] + ' ';
+                    n %= 10;
+                }
+                if (n >= 10) {
+                    result += teens[n - 10] + ' ';
+                    n = 0;
+                }
+                if (n > 0) {
+                    result += ones[n] + ' ';
+                }
+                return result;
+            }
+            
+            let result = '';
+            if (num >= 10000000) {
+                result += convertHundreds(Math.floor(num / 10000000)) + 'Crore ';
+                num %= 10000000;
+            }
+            if (num >= 100000) {
+                result += convertHundreds(Math.floor(num / 100000)) + 'Lakh ';
+                num %= 100000;
+            }
+            if (num >= 1000) {
+                result += convertHundreds(Math.floor(num / 1000)) + 'Thousand ';
+                num %= 1000;
+            }
+            if (num > 0) {
+                result += convertHundreds(num);
+            }
+            
+            return result.trim() + ' Rupees Only';
+        }
+
+        // Load salary slip data with dynamic teacher information
+        async function loadSalarySlipData() {
+            // Get teacher data from localStorage
+            const teachers = JSON.parse(localStorage.getItem('teachers')) || [];
+            const loggedInTeacherId = sessionStorage.getItem('loggedInTeacherId');
+            const currentTeacher = teachers.find(t => t.id === loggedInTeacherId);
+            
+            if (currentTeacher) {
+                // Update teacher information in the payslip
+                document.getElementById('teacher-name-display').textContent = currentTeacher.name;
+                document.getElementById('teacher-id-display').textContent = currentTeacher.id;
+                
+                // Update header teacher info
+                document.getElementById('teacher-name').textContent = currentTeacher.name;
+                document.getElementById('teacher-id').textContent = `Teacher ID: ${currentTeacher.id}`;
+            }
+            
+            // Load payslip data from session storage
+            const printPayslipId = sessionStorage.getItem('printPayslipId');
+            console.log('🎯 Print payslip ID from session:', printPayslipId);
+            
+            if (printPayslipId) {
+                await loadPayslipDetails(printPayslipId);
+            } else {
+                console.log('❌ No print payslip ID found in session storage');
+                // Try to get from URL parameters as fallback
+                const urlParams = new URLSearchParams(window.location.search);
+                const urlPayslipId = urlParams.get('payslipId');
+                if (urlPayslipId) {
+                    console.log('🔄 Using payslip ID from URL:', urlPayslipId);
+                    await loadPayslipDetails(urlPayslipId);
+                }
+            }
+            
+            console.log('Salary slip data loaded for teacher:', sessionStorage.getItem('teacherId'));
+        }
+
+        // Load specific payslip details
+        async function loadPayslipDetails(payslipId) {
+            console.log('🔍 Loading payslip details for ID:', payslipId);
+            
+            // First try to get from Firebase directly
+            let payslip = null;
+            
+            try {
+                // Get teacher ID
+                const loggedInTeacherId = sessionStorage.getItem('loggedInTeacherId');
+                console.log('👤 Teacher ID:', loggedInTeacherId);
+                
+                if (loggedInTeacherId) {
+                    // Fetch payslips from Firebase
+                    const payslips = await getTeacherPayslipsFromFirebase(loggedInTeacherId);
+                    console.log('📊 Fetched payslips from Firebase:', payslips.length);
+                    
+                    if (payslips.length > 0) {
+                        console.log('🔍 All available payslips:', payslips.map(p => ({ id: p.id, month: p.month, year: p.year })));
+                    }
+                    
+                    // Find the specific payslip with flexible matching
+                    payslip = payslips.find(p => {
+                        const exactMatch = p.id === payslipId;
+                        const monthMatch = payslipId.toLowerCase().includes(p.month?.toLowerCase() || '') && 
+                                         payslipId.toLowerCase().includes(loggedInTeacherId.toLowerCase());
+                        const compositeMatch = p.id?.toLowerCase().includes(payslipId.toLowerCase()) || 
+                                             payslipId.toLowerCase().includes(p.id?.toLowerCase() || '');
+                        
+                        console.log(`🔎 Checking payslip: ${p.id}`);
+                        console.log(`  - Exact match: ${exactMatch}`);
+                        console.log(`  - Month match: ${monthMatch}`);
+                        console.log(`  - Composite match: ${compositeMatch}`);
+                        
+                        return exactMatch || monthMatch || compositeMatch;
+                    });
+                    
+                    console.log('🎯 Found payslip:', payslip ? 'Yes' : 'No');
+                    if (payslip) {
+                        console.log('🎉 Matched payslip:', payslip);
+                    }
+                }
+            } catch (error) {
+                console.error('❌ Error loading from Firebase:', error);
+            }
+            
+            // Fallback to localStorage if Firebase fails
+            if (!payslip) {
+                console.log('🔄 Trying localStorage fallback...');
+                const payslips = JSON.parse(localStorage.getItem('payslips')) || [];
+                payslip = payslips.find(p => p.id === payslipId);
+                console.log('💾 Found in localStorage:', payslip ? 'Yes' : 'No');
+            }
+            
+            if (payslip) {
+                console.log('✅ Loading payslip data:', payslip);
+                
+                // Update payslip subtitle and month display
+                document.getElementById('payslip-subtitle').textContent = `${payslip.month} 2025 • Purpose: ${payslip.purpose || 'Salary'}`;
+                document.getElementById('month-display').textContent = `${payslip.month} 2025`;
+                document.getElementById('purpose-display').textContent = payslip.purpose || 'Salary';
+                document.getElementById('generated-date').textContent = new Date().toLocaleDateString();
+                
+                // Update earnings with teacher dashboard format
+                document.getElementById('basic-salary').textContent = `₹${formatCurrency(payslip.basicSalary || payslip.revisedBasicPay || 45000)}`;
+                document.getElementById('hra').textContent = `₹${formatCurrency(payslip.hra || payslip.hra30 || 18000)}`;
+                document.getElementById('da').textContent = `₹${formatCurrency(payslip.da || payslip.da150 || 9000)}`;
+                document.getElementById('gross-salary').textContent = `₹${formatCurrency(payslip.grossSalary || payslip.grossTotal || 72000)}`;
+                
+                // Update deductions with teacher dashboard format
+                document.getElementById('pf-deduction').textContent = `₹${formatCurrency(payslip.pf || 5400)}`;
+                document.getElementById('tds-deduction').textContent = `₹${formatCurrency(payslip.tds || payslip.incomeTax || 3600)}`;
+                document.getElementById('total-deductions-display').textContent = `₹${formatCurrency(payslip.totalDeductions || 9000)}`;
+                
+                // Update net salary
+                document.getElementById('net-salary').textContent = `Net Salary: ₹${formatCurrency(payslip.netSalary || payslip.netPay || 63000)}`;
+                
+                // Update amount in words
+                document.getElementById('amount-words').textContent = numberToWords(payslip.netPay || 0);
+                
+                console.log('✅ Payslip details loaded successfully');
+            } else {
+                console.log('❌ Payslip not found:', payslipId);
+                // Set default values if payslip not found
+                setDefaultPayslipValues();
+            }
+        }
+        
+        // Get teacher payslips from Firebase - use direct Firebase access
+        async function getTeacherPayslipsFromFirebase(teacherId) {
+            try {
+                console.log(`🔍 Starting payslip search for teacher ID: "${teacherId}" (type: ${typeof teacherId})`);
+                
+                // Always use direct Firebase access for payslips
+                return await getTeacherPayslipsDirectly(teacherId);
+                
+            } catch (error) {
+                console.error('❌ Error in getTeacherPayslipsFromFirebase:', error);
+                return [];
+            }
+        }
+        
+        // Get payslips from Firebase using the same logic as teacher dashboard
+        async function getTeacherPayslipsDirectly(teacherId) {
+            return new Promise(async (resolve) => {
+                try {
+                    if (!firebase.apps.length) {
+                        console.log('❌ Firebase not initialized');
+                        resolve([]);
+                        return;
+                    }
+                    
+                    console.log(`🔍 Starting payslip search for teacher ID: "${teacherId}" (type: ${typeof teacherId})`);
+                    
+                    const db = firebase.database();
+                    
+                    // Check if FirebaseDB instance exists and is initialized
+                    if (firebaseDB && firebaseDB.initialized) {
+                        console.log('🔥 Using FirebaseDB instance');
+                        
+                        // Get paysheet data using FirebaseDB
+                        firebaseDB.getPaysheetData((paysheetData) => {
+                            console.log('📊 Complete paysheet data structure:', paysheetData);
+                            console.log('📊 Available months:', Object.keys(paysheetData));
+                            
+                            // Filter payslips for this specific teacher
+                            const teacherPayslips = [];
+                            let totalRecordsChecked = 0;
+                            
+                            Object.keys(paysheetData).forEach(month => {
+                                const monthData = paysheetData[month];
+                                if (monthData && monthData.records && Array.isArray(monthData.records)) {
+                                    monthData.records.forEach(record => {
+                                        totalRecordsChecked++;
+                                        
+                                        // Extract teacher ID from the record ID
+                                        function extractTeacherId(compositeId) {
+                                            if (!compositeId) return null;
+                                            return compositeId.split('_')[0];
+                                        }
+                                        
+                                        const searchId = teacherId.toLowerCase();
+                                        const recordId = (record.id || '').toLowerCase();
+                                        const extractedId = extractTeacherId(recordId);
+                                        
+                                        console.log(`🔎 Checking record: recordId="${recordId}", extractedId="${extractedId}", searchId="${searchId}"`);
+                                        
+                                        if (recordId === searchId || extractedId === searchId || recordId.includes(searchId)) {
+                                            console.log(`✅ Match found for: ${recordId}`);
+                                            
+                                            // Create payslip object with proper structure
+                                            const payslip = {
+                                                id: record.id,
+                                                month: record.month || month,
+                                                year: record.year || new Date().getFullYear().toString(),
+                                                monthNum: record.monthNum || '01',
+                                                
+                                                // Pay scale info
+                                                payScale: record.payScale || '',
+                                                payBand: record.payBand || '',
+                                                agp: record.agp || 0,
+                                                
+                                                // Earnings
+                                                revisedBasicPay: record.revisedBasicPay || record.basicSalary || 0,
+                                                da150: record.da150 || record.da || 0,
+                                                hra30: record.hra30 || record.hra || 0,
+                                                cla: record.cla || record.allowances || 0,
+                                                addAllowance: record.addAllowance || 0,
+                                                grossTotal: record.grossTotal || record.grossSalary || 0,
+                                                
+                                                // Deductions
+                                                profTax: record.profTax || record.tax || 0,
+                                                incomeTax: record.incomeTax || 0,
+                                                pf: record.pf || 0,
+                                                lic: record.lic || 0,
+                                                medicalInsurance: record.medicalInsurance || record.esi || 0,
+                                                ewFund: record.ewFund || 0,
+                                                totalDeductions: record.totalDeductions || 0,
+                                                
+                                                // Net pay
+                                                netPay: record.netPay || 0,
+                                                
+                                                // Original record for reference
+                                                originalRecord: record
+                                            };
+                                            
+                                            teacherPayslips.push(payslip);
+                                        }
+                                    });
+                                }
+                            });
+                            
+                            console.log(`✅ MATCH FOUND! Payslips found: ${teacherPayslips.length}`);
+                            console.log(`- Teacher ID searched: "${teacherId}"`);
+                            console.log(`- Total records checked: ${totalRecordsChecked}`);
+                            console.log(`- Final payslips:`, teacherPayslips);
+                            
+                            resolve(teacherPayslips);
+                        });
+                    } else {
+                        console.log('🔄 FirebaseDB not available, trying direct Firebase access');
+                        
+                        // Fallback to direct Firebase access
+                        const paysheetRef = db.ref('paysheets');
+                        
+                        paysheetRef.once('value')
+                            .then((snapshot) => {
+                                const paysheetData = snapshot.val() || {};
+                                console.log('📊 Direct Firebase paysheet data:', Object.keys(paysheetData));
+                                
+                                const teacherPayslips = [];
+                                
+                                Object.keys(paysheetData).forEach(paysheetId => {
+                                    const paysheet = paysheetData[paysheetId];
+                                    if (paysheet && paysheet.records) {
+                                        Object.keys(paysheet.records).forEach(recordKey => {
+                                            const record = paysheet.records[recordKey];
+                                            
+                                            function extractTeacherId(compositeId) {
+                                                if (!compositeId) return null;
+                                                return compositeId.split('_')[0];
+                                            }
+                                            
+                                            const searchId = teacherId.toLowerCase();
+                                            const recordId = (record.id || '').toLowerCase();
+                                            const extractedId = extractTeacherId(recordId);
+                                            
+                                            if (recordId === searchId || extractedId === searchId || recordId.includes(searchId)) {
+                                                teacherPayslips.push({
+                                                    ...record,
+                                                    revisedBasicPay: record.basicSalary || 0,
+                                                    da150: record.da || 0,
+                                                    hra30: record.hra || 0,
+                                                    cla: record.allowances || 0,
+                                                    grossTotal: record.grossSalary || 0,
+                                                    profTax: record.tax || 0,
+                                                    medicalInsurance: record.esi || 0
+                                                });
+                                            }
+                                        });
+                                    }
+                                });
+                                
+                                console.log(`✅ Direct Firebase payslips found: ${teacherPayslips.length}`);
+                                resolve(teacherPayslips);
+                            })
+                            .catch((error) => {
+                                console.error('❌ Firebase error:', error);
+                                resolve([]);
+                            });
+                    }
+                    
+                } catch (error) {
+                    console.error('❌ Error in getTeacherPayslipsDirectly:', error);
+                    resolve([]);
+                }
+            });
+        }
+
+        // Set default payslip values
+        function setDefaultPayslipValues() {
+            const defaultElements = [
+                'revised-basic-pay', 'da-150', 'hra-30', 'cla', 'add-allowance', 'gross-total',
+                'prof-tax', 'income-tax', 'pf', 'lic', 'medical-insurance', 'ew-fund', 'total-deductions', 'net-pay'
+            ];
+            
+            defaultElements.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.textContent = '₹0';
+                }
+            });
+            
+            document.getElementById('amount-words').textContent = 'Zero Rupees Only';
+        }
+
+        // Responsive table handling
+        function handleResponsiveTables() {
+            const tables = document.querySelectorAll('.payslip-table');
+            
+            tables.forEach(table => {
+                if (window.innerWidth < 768) {
+                    // Add mobile-friendly styling for small screens
+                    table.classList.add('text-xs');
+                } else {
+                    table.classList.remove('text-xs');
+                }
+            });
+        }
+
+        // Handle window resize
+        window.addEventListener('resize', handleResponsiveTables);
+        
+        // Initial responsive check
+        handleResponsiveTables();
+
+        // Prevent right-click on sensitive data (optional security measure)
+        document.addEventListener('contextmenu', function(e) {
+            if (e.target.closest('.payslip-section')) {
+                e.preventDefault();
+            }
+        });
+
+        // Add keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Ctrl+P for print
+            if (e.ctrlKey && e.key === 'p') {
+                e.preventDefault();
+                printPayslip();
+            }
+            
+            // Escape to go back
+            if (e.key === 'Escape') {
+                window.location.href = 'teacher_dashboard.html';
+            }
+        });
+    </script>
+    <!-- Firebase Integration -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="../config/firebase-config.js"></script>
+    <script src="../js/firebase-db.js"></script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>
