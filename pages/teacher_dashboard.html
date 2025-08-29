@@ -186,7 +186,7 @@
     <main class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <!-- Welcome Section -->
         <div class="mb-8">
-            <h2 class="text-fluid-2xl font-semibold text-text-primary mb-2">Welcome back, <span id="welcome-name">Dr. Sarah Johnson</span></h2>
+            <h2 class="text-fluid-2xl font-semibold text-text-primary mb-2">Welcome back, <span id="welcome-name">Teacher</span></h2>
             <p class="text-text-secondary font-caption">Access your salary information and manage your payslips</p>
         </div>
 
@@ -196,18 +196,18 @@
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between">
                     <div class="flex items-center space-x-4 mb-4 md:mb-0">
                         <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center">
-                            <span class="text-xl font-semibold text-primary" id="profile-initials">SJ</span>
+                            <span class="text-xl font-semibold text-primary" id="profile-initials">T</span>
                         </div>
                         <div>
-                            <h3 class="text-fluid-lg font-semibold text-text-primary" id="profile-name">Dr. Sarah Johnson</h3>
-                            <p class="text-text-secondary font-caption" id="profile-designation">Associate Professor</p>
-                            <p class="text-sm text-text-secondary font-caption" id="profile-department">Department of Computer Science</p>
+                            <h3 class="text-fluid-lg font-semibold text-text-primary" id="profile-name">Teacher Name</h3>
+                            <p class="text-text-secondary font-caption" id="profile-designation">Designation</p>
+                            <p class="text-sm text-text-secondary font-caption" id="profile-department">Department</p>
                         </div>
                     </div>
                     <div class="grid grid-cols-1 gap-4 text-center">
                         <div class="bg-primary-50 rounded-lg p-3">
                             <p class="text-xs text-text-secondary font-caption">Teacher ID</p>
-                            <p class="text-sm font-semibold text-text-primary font-data" id="profile-teacher-id">TCH001</p>
+                            <p class="text-sm font-semibold text-text-primary font-data" id="profile-teacher-id">-</p>
                         </div>
                     </div>
                 </div>
@@ -266,79 +266,6 @@
             </div>
         </section>
 
-        <!-- Request Payslip Section -->
-        <section class="mb-6">
-            <div class="glass-card p-6 shadow-elevation-1">
-                <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-fluid-lg font-semibold text-text-primary">Request New Payslip</h3>
-                    <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-                    </svg>
-                </div>
-                
-                <form id="payslip-request-form" class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <!-- Month Selection -->
-                    <div>
-                        <label for="request-month" class="form-label">Select Month *</label>
-                        <select id="request-month" class="form-input" required>
-                            <option value="">Choose Month</option>
-                            <option value="January">January 2025</option>
-                            <option value="February">February 2025</option>
-                            <option value="March">March 2025</option>
-                            <option value="April">April 2025</option>
-                            <option value="May">May 2025</option>
-                            <option value="June">June 2025</option>
-                            <option value="July">July 2025</option>
-                            <option value="August">August 2025</option>
-                            <option value="September">September 2025</option>
-                            <option value="October">October 2025</option>
-                            <option value="November">November 2025</option>
-                            <option value="December">December 2025</option>
-                        </select>
-                    </div>
-                    
-                    <!-- Purpose Selection -->
-                    <div>
-                        <label for="request-purpose" class="form-label">Purpose/Reason *</label>
-                        <select id="request-purpose" class="form-input" required>
-                            <option value="">Choose Purpose</option>
-                            <option value="Bank Loan Application">Bank Loan Application</option>
-                            <option value="Visa Application">Visa Application</option>
-                            <option value="Job Application">Job Application</option>
-                            <option value="Income Tax Filing">Income Tax Filing</option>
-                            <option value="Insurance Claim">Insurance Claim</option>
-                            <option value="Education Loan">Education Loan</option>
-                            <option value="Home Loan">Home Loan</option>
-                            <option value="Personal Verification">Personal Verification</option>
-                            <option value="Government Documentation">Government Documentation</option>
-                            <option value="Other Official Purpose">Other Official Purpose</option>
-                        </select>
-                    </div>
-                    
-                    <!-- Submit Button -->
-                    <div class="flex items-end">
-                        <button type="submit" class="btn-primary w-full">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
-                            </svg>
-                            Send Request
-                        </button>
-                    </div>
-                </form>
-                
-                <!-- Request Status -->
-                <div id="request-status" class="mt-4 hidden">
-                    <div class="p-3 bg-success-50 border border-success-200 rounded-md">
-                        <div class="flex items-center">
-                            <svg class="w-4 h-4 text-success-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                            <span class="text-sm text-success-700 font-medium">Request sent successfully! Admin will review and approve.</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
         <!-- Dashboard Grid -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -882,14 +809,23 @@
 
                     <div class="flex space-x-3">
                         <button 
-                            onclick="viewPayslipDetails('${payslip.id}')"
+                            onclick="viewPayslip('${payslip.id}')"
                             class="flex-1 btn-primary py-2 text-sm flex items-center justify-center space-x-2"
                         >
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
                             </svg>
-                            <span>View Details</span>
+                            <span>View Payslip</span>
+                        </button>
+                        <button 
+                            onclick="printPayslip('${payslip.id}')"
+                            class="flex-1 btn-secondary py-2 text-sm flex items-center justify-center space-x-2"
+                        >
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+                            </svg>
+                            <span>Print</span>
                         </button>
                     </div>
                 </div>
@@ -1020,136 +956,77 @@
                                     <h2 class="text-base font-semibold">Salary Slip for ${payslip.month} ${payslip.year}</h2>
                                 </div>
                                 
-                                <!-- Employee Details -->
+                                <!-- Employee Details - Standardized Table Format -->
                                 <div class="grid grid-cols-2 gap-2 mb-2" style="font-size: 12px;">
-                                    <div class="space-y-1">
-                                        <div class="flex">
-                                            <span class="w-24 font-medium">Name</span>
-                                            <span>${getCurrentTeacherName()}</span>
-                                        </div>
-                                        <div class="flex">
-                                            <span class="w-24 font-medium">Emp. No</span>
-                                            <span>${getCurrentTeacherId()}</span>
-                                        </div>
-                                        <div class="flex">
-                                            <span class="w-24 font-medium">Designation</span>
-                                            <span>${getCurrentTeacherDesignation()}</span>
-                                        </div>
+                                    <div class="border border-gray-400 p-2 bg-gray-50">
+                                        <table class="w-full border-collapse">
+                                            <tr class="border-b border-gray-300"><td class="font-medium py-1 w-20 border-r border-gray-300 px-1">Name</td><td class="py-1 px-1">${getCurrentTeacherName()}</td></tr>
+                                            <tr class="border-b border-gray-300"><td class="font-medium py-1 border-r border-gray-300 px-1">Emp. No</td><td class="py-1 px-1">${getCurrentTeacherId()}</td></tr>
+                                            <tr><td class="font-medium py-1 border-r border-gray-300 px-1">Designation</td><td class="py-1 px-1">${getCurrentTeacherDesignation()}</td></tr>
+                                        </table>
                                     </div>
-                                    <div class="space-y-1">
-                                        <div class="flex">
-                                            <span class="w-24 font-medium">Department</span>
-                                            <span>${getCurrentTeacherDepartment()}</span>
-                                        </div>
-                                        <div class="flex">
-                                            <span class="w-24 font-medium">Pay Scale</span>
-                                            <span>${payslip.payScale || ''}</span>
-                                        </div>
-                                        <div class="flex">
-                                            <span class="w-24 font-medium">Pay Band</span>
-                                            <span>${payslip.payBand || ''}</span>
-                                        </div>
-                                        <div class="flex">
-                                            <span class="w-24 font-medium">A.G.P</span>
-                                            <span>${payslip.agp ? '₹' + formatCurrency(payslip.agp) : ''}</span>
-                                        </div>
+                                    <div class="border border-gray-400 p-2 bg-gray-50">
+                                        <table class="w-full border-collapse">
+                                            <tr class="border-b border-gray-300"><td class="font-medium py-1 w-20 border-r border-gray-300 px-1">Department</td><td class="py-1 px-1">${getCurrentTeacherDepartment()}</td></tr>
+                                            <tr class="border-b border-gray-300"><td class="font-medium py-1 border-r border-gray-300 px-1">Pay Scale</td><td class="py-1 px-1">${payslip.payScale || ''}</td></tr>
+                                            <tr class="border-b border-gray-300"><td class="font-medium py-1 border-r border-gray-300 px-1">Pay Band</td><td class="py-1 px-1">${payslip.payBand || ''}</td></tr>
+                                            <tr><td class="font-medium py-1 border-r border-gray-300 px-1">A.G.P</td><td class="py-1 px-1">${payslip.agp ? '₹' + formatCurrency(payslip.agp) : ''}</td></tr>
+                                        </table>
                                     </div>
                                 </div>
                                 
-                                <!-- Earnings and Deductions Table -->
-                                <div class="grid grid-cols-2 gap-0 border-t-2 border-gray-400">
+                                <!-- Earnings and Deductions - Standardized Format -->
+                                <div class="grid grid-cols-2 gap-2 mb-2" style="font-size: 12px;">
                                     <!-- Earnings -->
-                                    <div class="border-r border-gray-400">
-                                        <div class="bg-gray-100 text-center font-bold py-1 border-b border-gray-400" style="font-size: 13px;">Earnings</div>
-                                        <div class="p-1" style="font-size: 12px;">
-                                            <div class="flex justify-between">
-                                                <span class="font-medium">Revised Basic Pay</span>
-                                                <span class="font-bold">₹${formatCurrency(payslip.revisedBasicPay)}</span>
-                                            </div>
-                                            <div class="flex justify-between">
-                                                <span class="font-medium">D.A. 150%</span>
-                                                <span class="font-bold">₹${formatCurrency(payslip.da150)}</span>
-                                            </div>
-                                            <div class="flex justify-between">
-                                                <span class="font-medium">H.R.A 30%</span>
-                                                <span class="font-bold">₹${formatCurrency(payslip.hra30)}</span>
-                                            </div>
-                                            <div class="flex justify-between">
-                                                <span class="font-medium">C.L.A.</span>
-                                                <span class="font-bold">₹${formatCurrency(payslip.cla)}</span>
-                                            </div>
-                                            <div class="flex justify-between">
-                                                <span class="font-medium">Add. Allowance</span>
-                                                <span class="font-bold">₹${formatCurrency(payslip.addAllowance)}</span>
-                                            </div>
-                                            <div class="flex justify-between font-bold border-t border-gray-400 pt-1" style="font-size: 13px;">
-                                                <span>Gross Total</span>
-                                                <span>₹${formatCurrency(payslip.grossTotal)}</span>
-                                            </div>
-                                        </div>
+                                    <div class="border border-gray-400 p-2 bg-green-50">
+                                        <h3 class="font-bold text-center bg-green-200 py-1 mb-2 border border-gray-400" style="font-size: 13px;">Earnings</h3>
+                                        <table class="w-full border-collapse">
+                                            <tr class="border-b border-gray-300"><td class="py-1 px-1 border-r border-gray-300">Revised Basic Pay</td><td class="text-right py-1 px-1">₹${formatCurrency(payslip.revisedBasicPay)}</td></tr>
+                                            <tr class="border-b border-gray-300"><td class="py-1 px-1 border-r border-gray-300">D.A. 150%</td><td class="text-right py-1 px-1">₹${formatCurrency(payslip.da150)}</td></tr>
+                                            <tr class="border-b border-gray-300"><td class="py-1 px-1 border-r border-gray-300">H.R.A 30%</td><td class="text-right py-1 px-1">₹${formatCurrency(payslip.hra30)}</td></tr>
+                                            <tr class="border-b border-gray-300"><td class="py-1 px-1 border-r border-gray-300">C.L.A.</td><td class="text-right py-1 px-1">₹${formatCurrency(payslip.cla)}</td></tr>
+                                            <tr class="border-b border-gray-300"><td class="py-1 px-1 border-r border-gray-300">Add. Allowance</td><td class="text-right py-1 px-1">₹${formatCurrency(payslip.addAllowance)}</td></tr>
+                                            <tr class="bg-green-100 border border-gray-400"><td class="py-1 px-1 border-r border-gray-300 font-bold">Gross Total</td><td class="text-right py-1 px-1 font-bold">₹${formatCurrency(payslip.grossTotal)}</td></tr>
+                                        </table>
                                     </div>
                                     
                                     <!-- Deductions -->
-                                    <div>
-                                        <div class="bg-gray-100 text-center font-bold py-1 border-b border-gray-400" style="font-size: 13px;">Deductions</div>
-                                        <div class="p-1" style="font-size: 12px;">
-                                            <div class="flex justify-between">
-                                                <span class="font-medium">Prof. Tax</span>
-                                                <span class="font-bold">₹${formatCurrency(payslip.profTax)}</span>
-                                            </div>
-                                            <div class="flex justify-between">
-                                                <span class="font-medium">Income Tax</span>
-                                                <span class="font-bold">₹${formatCurrency(payslip.incomeTax)}</span>
-                                            </div>
-                                            <div class="flex justify-between">
-                                                <span class="font-medium">P.F.</span>
-                                                <span class="font-bold">₹${formatCurrency(payslip.pf)}</span>
-                                            </div>
-                                            <div class="flex justify-between">
-                                                <span class="font-medium">LIC</span>
-                                                <span class="font-bold">₹${formatCurrency(payslip.lic)}</span>
-                                            </div>
-                                            <div class="flex justify-between">
-                                                <span class="font-medium">Medical Insur.</span>
-                                                <span class="font-bold">₹${formatCurrency(payslip.medicalInsurance)}</span>
-                                            </div>
-                                            <div class="flex justify-between">
-                                                <span class="font-medium">EW Fund</span>
-                                                <span class="font-bold">₹${formatCurrency(payslip.ewFund)}</span>
-                                            </div>
-                                            <div class="flex justify-between font-bold border-t border-gray-400 pt-1" style="font-size: 13px;">
-                                                <span>Total Deductions</span>
-                                                <span>₹${formatCurrency(payslip.totalDeductions)}</span>
-                                            </div>
-                                        </div>
+                                    <div class="border border-gray-400 p-2 bg-red-50">
+                                        <h3 class="font-bold text-center bg-red-200 py-1 mb-2 border border-gray-400" style="font-size: 13px;">Deductions</h3>
+                                        <table class="w-full border-collapse">
+                                            <tr class="border-b border-gray-300"><td class="py-1 px-1 border-r border-gray-300">Prof. Tax</td><td class="text-right py-1 px-1">₹${formatCurrency(payslip.profTax)}</td></tr>
+                                            <tr class="border-b border-gray-300"><td class="py-1 px-1 border-r border-gray-300">Income Tax</td><td class="text-right py-1 px-1">₹${formatCurrency(payslip.incomeTax)}</td></tr>
+                                            <tr class="border-b border-gray-300"><td class="py-1 px-1 border-r border-gray-300">P.F.</td><td class="text-right py-1 px-1">₹${formatCurrency(payslip.pf)}</td></tr>
+                                            <tr class="border-b border-gray-300"><td class="py-1 px-1 border-r border-gray-300">LIC</td><td class="text-right py-1 px-1">₹${formatCurrency(payslip.lic)}</td></tr>
+                                            <tr class="border-b border-gray-300"><td class="py-1 px-1 border-r border-gray-300">Medical Insur.</td><td class="text-right py-1 px-1">₹${formatCurrency(payslip.medicalInsurance)}</td></tr>
+                                            <tr class="border-b border-gray-300"><td class="py-1 px-1 border-r border-gray-300">EW Fund</td><td class="text-right py-1 px-1">₹${formatCurrency(payslip.ewFund)}</td></tr>
+                                            <tr class="bg-red-100 border border-gray-400"><td class="py-1 px-1 border-r border-gray-300 font-bold">Total Deductions</td><td class="text-right py-1 px-1 font-bold">₹${formatCurrency(payslip.totalDeductions)}</td></tr>
+                                        </table>
                                     </div>
                                 </div>
                                 
-                                <!-- Net Pay -->
-                                <div class="border-t-2 border-gray-400 grid grid-cols-2">
-                                    <div class="text-center font-bold py-2 border-r border-gray-400" style="font-size: 15px;">Net Pay</div>
-                                    <div class="text-center font-bold py-2" style="font-size: 15px;">₹${formatCurrency(payslip.netPay)}</div>
+                                <!-- Net Pay - Standardized Format -->
+                                <div class="text-center mb-2">
+                                    <div class="bg-blue-100 p-2 border-2 border-blue-800">
+                                        <h2 class="font-bold text-sm text-gray-900 mb-1">Net Pay</h2>
+                                        <h2 class="font-bold text-lg text-blue-900 bg-white p-1 border border-blue-600 rounded">₹${formatCurrency(payslip.netPay)}</h2>
+                                    </div>
                                 </div>
                                 
                                 <!-- Amount in Words -->
-                                <div class="border-t border-gray-400 p-2" style="font-size: 12px;">
-                                    <span class="font-semibold">Amount in Words:</span>
-                                    <span class="font-medium">${numberToWords(payslip.netPay)}</span>
+                                <div class="mb-2 text-xs border border-gray-400 p-2 bg-yellow-50">
+                                    <p><strong>Amount in Words:</strong> <span class="font-medium">${numberToWords(payslip.netPay)}</span></p>
                                 </div>
                                 
                                 <!-- Signatures -->
-                                <div class="border-t border-gray-400 grid grid-cols-2 gap-2 p-2 mt-2">
-                                    <div class="text-center">
-                                        <div class="h-8 mb-1"></div>
-                                        <div class="border-t border-gray-400 pt-1">
-                                            <span style="font-size: 11px; font-weight: 500;">Principal Signature</span>
-                                        </div>
+                                <div class="grid grid-cols-2 gap-2 mt-2 pt-2 border-t border-gray-400">
+                                    <div class="text-center border border-gray-400 p-2 bg-gray-50">
+                                        <div class="h-6 mb-1 border-b border-gray-300"></div>
+                                        <p class="text-xs font-medium">Principal Signature</p>
                                     </div>
-                                    <div class="text-center">
-                                        <div class="h-8 mb-1"></div>
-                                        <div class="border-t border-gray-400 pt-1">
-                                            <span style="font-size: 11px; font-weight: 500;">Clerk Signature</span>
-                                        </div>
+                                    <div class="text-center border border-gray-400 p-2 bg-gray-50">
+                                        <div class="h-6 mb-1 border-b border-gray-300"></div>
+                                        <p class="text-xs font-medium">Clerk Signature</p>
                                     </div>
                                 </div>
                             </div>
@@ -1287,69 +1164,11 @@
                 
             } catch (error) {
                 console.error('Error loading teacher data:', error);
-                // Fallback to localStorage
-                loadPayslips();
+                // Don't fallback to avoid duplicate loading
+                console.log('Skipping localStorage fallback to prevent duplicate payslips');
             }
         }
         
-        // Payslip Request Form Handler
-        document.getElementById('payslip-request-form').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const month = document.getElementById('request-month').value;
-            const purpose = document.getElementById('request-purpose').value;
-            const loggedInTeacherId = sessionStorage.getItem('loggedInTeacherId') || 'N013';
-            
-            if (!month || !purpose) {
-                alert('कृपया month आणि purpose निवडा!');
-                return;
-            }
-            
-            try {
-                // Create payslip request object
-                const requestData = {
-                    id: Date.now().toString(),
-                    teacherId: loggedInTeacherId,
-                    teacherName: document.getElementById('profile-name').textContent,
-                    month: month,
-                    purpose: purpose,
-                    status: 'Pending',
-                    requestDate: new Date().toISOString(),
-                    approvedBy: null,
-                    approvalDate: null
-                };
-                
-                // Save to Firebase
-                if (typeof firebase !== 'undefined') {
-                    const requestRef = firebase.database().ref('payslipRequests').push();
-                    await requestRef.set(requestData);
-                    console.log('✅ Payslip request saved to Firebase');
-                } else {
-                    // Fallback to localStorage
-                    const existingRequests = JSON.parse(localStorage.getItem('payslipRequests') || '[]');
-                    existingRequests.push(requestData);
-                    localStorage.setItem('payslipRequests', JSON.stringify(existingRequests));
-                    console.log('✅ Payslip request saved to localStorage');
-                }
-                
-                // Show success message
-                document.getElementById('request-status').classList.remove('hidden');
-                
-                // Reset form
-                document.getElementById('payslip-request-form').reset();
-                
-                // Hide success message after 5 seconds
-                setTimeout(() => {
-                    document.getElementById('request-status').classList.add('hidden');
-                }, 5000);
-                
-                console.log(`📋 Payslip request sent: ${month} for ${purpose}`);
-                
-            } catch (error) {
-                console.error('Error sending payslip request:', error);
-                alert('Request पाठवताना error आली. कृपया पुन्हा try करा.');
-            }
-        });
 
         // Page load handler - NO AUTH CHECK
         window.addEventListener('load', function() {
@@ -1357,20 +1176,97 @@
             loadTeacherDataDirectly();
         });
         
-        // Load approved payslip requests and show payslips
+        // Load payslips from paysheet data month-wise
         async function loadApprovedPayslips() {
             try {
-                const loggedInTeacherId = sessionStorage.getItem('loggedInTeacherId') || 'N013';
+                // Clear container first to prevent duplicates
+                let payslipsContainer = document.getElementById('payslips-container');
+                if (payslipsContainer) {
+                    payslipsContainer.innerHTML = '<div class="text-center">Loading payslips...</div>';
+                }
                 
-                // Get approved payslip requests for this teacher
-                const requestsRef = firebase.database().ref('payslipRequests');
-                const query = requestsRef.orderByChild('teacherId').equalTo(loggedInTeacherId);
-                const snapshot = await query.once('value');
-                const requests = snapshot.val();
+                const loggedInTeacherId = sessionStorage.getItem('loggedInTeacherId') || sessionStorage.getItem('teacherId') || 'N013';
+                console.log('🔍 Loading payslips for teacher:', loggedInTeacherId);
+                console.log('🔍 All session data:', {
+                    loggedInTeacherId: sessionStorage.getItem('loggedInTeacherId'),
+                    teacherId: sessionStorage.getItem('teacherId'),
+                    teacherName: sessionStorage.getItem('teacherName'),
+                    loggedInTeacherName: sessionStorage.getItem('loggedInTeacherName')
+                });
                 
-                const payslipsContainer = document.getElementById('payslips-container');
+                // Get paysheet data directly from Firebase
+                const paysheetRef = firebase.database().ref('paysheets');
+                const snapshot = await paysheetRef.once('value');
+                const paysheetData = snapshot.val() || {};
                 
-                if (!requests) {
+                console.log('📊 Available paysheet months:', Object.keys(paysheetData));
+                
+                // Find payslips for this teacher from all months
+                const teacherPayslips = [];
+                
+                Object.keys(paysheetData).forEach(month => {
+                    const monthData = paysheetData[month];
+                    console.log(`🔍 Checking month: ${month}`, monthData);
+                    
+                    if (monthData && monthData.records) {
+                        // Handle records as object (not array)
+                        const recordsObj = monthData.records;
+                        const recordKeys = Object.keys(recordsObj);
+                        console.log(`📋 Records in ${month}:`, recordKeys.length, 'records found');
+                        console.log(`📋 Record keys:`, recordKeys);
+                        
+                        recordKeys.forEach((recordKey, index) => {
+                            const record = recordsObj[recordKey];
+                            console.log(`🔎 Record ${index} (${recordKey}):`, record);
+                            
+                            // Check if this record matches the logged-in teacher - more flexible matching
+                            const recordTeacherId = record.teacherId || record.id || recordKey;
+                            const searchId = loggedInTeacherId.toLowerCase();
+                            const recordId = recordTeacherId.toString().toLowerCase();
+                            
+                            console.log(`🔍 Comparing: "${recordId}" with "${searchId}"`);
+                            
+                            // Match by exact ID or if record ID contains the teacher ID
+                            if (recordId === searchId || recordId.includes(searchId) || searchId.includes(recordId)) {
+                                console.log(`✅ Found matching payslip for teacher ${loggedInTeacherId} in ${month}`);
+                                
+                                teacherPayslips.push({
+                                    id: record.id || recordKey,
+                                    teacherId: loggedInTeacherId,
+                                    revisedBasicPay: record.revisedBasicPay || record.basicSalary || 0,
+                                    netPay: record.netPay || record.netSalary || 0,
+                                    grossTotal: record.grossTotal || record.grossSalary || 0,
+                                    totalDeductions: record.totalDeductions || 0,
+                                    da150: record.da150 || record.da || 0,
+                                    hra30: record.hra30 || record.hra || 0,
+                                    cla: record.cla || 0,
+                                    addAllowance: record.addAllowance || 0,
+                                    profTax: record.profTax || 0,
+                                    incomeTax: record.incomeTax || 0,
+                                    pf: record.pf || 0,
+                                    lic: record.lic || 0,
+                                    medicalInsurance: record.medicalInsurance || 0,
+                                    ewFund: record.ewFund || 0,
+                                    payScale: record.payScale || '',
+                                    payBand: record.payBand || '',
+                                    agp: record.agp || 0,
+                                    month: record.month || month.replace('_', ' '),
+                                    year: record.year || '2025',
+                                    paysheetMonth: month
+                                });
+                            }
+                        });
+                    } else {
+                        console.log(`❌ No records found in ${month}`);
+                    }
+                });
+                
+                console.log('📋 Found payslips for teacher:', teacherPayslips.length);
+                
+                // Reuse existing container reference
+                payslipsContainer = document.getElementById('payslips-container');
+                
+                if (teacherPayslips.length === 0) {
                     payslipsContainer.innerHTML = `
                         <div class="glass-card p-8 text-center">
                             <div class="w-16 h-16 bg-secondary-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -1379,69 +1275,56 @@
                                 </svg>
                             </div>
                             <h3 class="text-lg font-medium text-text-primary mb-2">No Payslips Available</h3>
-                            <p class="text-text-secondary font-caption mb-4">Request payslips using the form above.</p>
+                            <p class="text-text-secondary font-caption mb-4">No paysheet data found for your ID: ${loggedInTeacherId}</p>
+                            <p class="text-xs text-gray-500">Available months: ${Object.keys(paysheetData).join(', ')}</p>
+                            <button onclick="loadApprovedPayslips()" class="mt-4 btn-primary">Refresh</button>
                         </div>
                     `;
                     return;
                 }
                 
-                const approvedRequests = Object.values(requests).filter(request => 
-                    request.status === 'Approved'
-                );
-                
-                if (approvedRequests.length === 0) {
-                    payslipsContainer.innerHTML = `
-                        <div class="glass-card p-8 text-center">
-                            <div class="w-16 h-16 bg-warning-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <svg class="w-8 h-8 text-warning-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                </svg>
-                            </div>
-                            <h3 class="text-lg font-medium text-text-primary mb-2">No Approved Payslips</h3>
-                            <p class="text-text-secondary font-caption mb-4">Your payslip requests are pending admin approval.</p>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                // Display approved payslips
-                payslipsContainer.innerHTML = approvedRequests.map(request => `
+                // Display month-wise payslips from paysheet data
+                payslipsContainer.innerHTML = teacherPayslips.map(payslip => `
                     <div class="glass-card p-6 shadow-elevation-1 hover-lift">
                         <div class="flex justify-between items-start mb-4">
                             <div>
-                                <h4 class="text-lg font-semibold text-text-primary">${request.month} 2025</h4>
-                                <p class="text-sm text-text-secondary font-caption">${request.purpose}</p>
+                                <h4 class="text-lg font-semibold text-text-primary">${payslip.month} 2025</h4>
+                                <p class="text-sm text-text-secondary font-caption">Salary Slip</p>
                             </div>
                             <span class="px-2 py-1 bg-success-100 text-success-800 text-xs font-medium rounded-full">
-                                Approved
+                                Available
                             </span>
                         </div>
                         
                         <div class="grid grid-cols-2 gap-4 mb-4 text-sm">
                             <div>
-                                <p class="text-text-secondary font-caption">Approved Date</p>
-                                <p class="font-medium text-text-primary">${new Date(request.approvalDate).toLocaleDateString()}</p>
+                                <p class="text-text-secondary font-caption">Basic Pay</p>
+                                <p class="font-medium text-text-primary">₹${payslip.revisedBasicPay || payslip.basicSalary || 'N/A'}</p>
                             </div>
                             <div>
-                                <p class="text-text-secondary font-caption">Approved By</p>
-                                <p class="font-medium text-text-primary">${request.approvedBy}</p>
+                                <p class="text-text-secondary font-caption">Net Pay</p>
+                                <p class="font-medium text-text-primary">₹${payslip.netPay || payslip.netSalary || 'N/A'}</p>
                             </div>
                         </div>
                         
                         <div class="flex space-x-3">
-                            <button onclick="viewPayslip('${request.id}', '${request.month}', '${request.purpose}')" 
-                                class="flex-1 btn-primary text-sm py-2">
+                            <button onclick="viewPayslip('${payslip.id}')" class="flex-1 btn-primary text-sm">
                                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
                                 </svg>
                                 View Payslip
                             </button>
+                            <button onclick="printPayslip('${payslip.id}')" class="flex-1 btn-secondary text-sm">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+                                </svg>
+                                Print
+                            </button>
                         </div>
-                    </div>
-                `).join('');
+                    </div>`).join('');
                 
-                console.log(`✅ Loaded ${approvedRequests.length} approved payslips`);
+                console.log(`✅ Loaded ${teacherPayslips.length} payslips from paysheet data`);
                 
             } catch (error) {
                 console.error('Error loading approved payslips:', error);
@@ -1453,131 +1336,18 @@
             }
         }
 
-        // View payslip function
-        function viewPayslip(requestId, month, purpose) {
-            const teacherName = document.getElementById('profile-name').textContent;
-            const teacherId = sessionStorage.getItem('loggedInTeacherId') || 'N013';
+        // View payslip function - redirect to salary slip detail view
+        function viewPayslip(payslipId) {
+            // Store payslip ID in session for the detail view
+            sessionStorage.setItem('printPayslipId', payslipId);
             
-            // Generate sample payslip data
-            const payslipData = {
-                teacherName: teacherName,
-                teacherId: teacherId,
-                month: month,
-                purpose: purpose,
-                basicSalary: '₹45,000',
-                hra: '₹18,000',
-                da: '₹9,000',
-                grossSalary: '₹72,000',
-                pf: '₹5,400',
-                tds: '₹3,600',
-                netSalary: '₹63,000'
-            };
-            
-            // Show payslip modal
-            showPayslipModal(payslipData);
+            // Redirect to salary slip detail view
+            window.location.href = 'salary_slip_detail_view.html';
         }
 
+        // Removed duplicate function - now using global window functions
 
-        // Show payslip modal
-        function showPayslipModal(data) {
-            const modal = document.createElement('div');
-            modal.id = 'payslip-modal';
-            modal.className = 'fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4';
-            modal.innerHTML = `
-                <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-                    <div class="p-6" id="payslip-content">
-                        <div class="text-center mb-6">
-                            <h2 class="text-2xl font-bold text-text-primary">BVIT SALARY SLIP</h2>
-                            <p class="text-text-secondary">${data.month} 2025 • Purpose: ${data.purpose}</p>
-                        </div>
-                        
-                        <div class="grid grid-cols-2 gap-6 mb-6">
-                            <div>
-                                <h3 class="font-semibold text-text-primary mb-2">Employee Details</h3>
-                                <p><strong>Name:</strong> ${data.teacherName}</p>
-                                <p><strong>ID:</strong> ${data.teacherId}</p>
-                                <p><strong>Purpose:</strong> ${data.purpose}</p>
-                            </div>
-                            <div>
-                                <h3 class="font-semibold text-text-primary mb-2">Pay Period</h3>
-                                <p><strong>Month:</strong> ${data.month} 2025</p>
-                                <p><strong>Generated:</strong> ${new Date().toLocaleDateString()}</p>
-                            </div>
-                        </div>
-                        
-                        <div class="border-t border-b py-4 mb-4">
-                            <h3 class="font-semibold text-text-primary mb-4">Salary Breakdown</h3>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <h4 class="font-medium text-success-600 mb-2">Earnings</h4>
-                                    <div class="space-y-1 text-sm">
-                                        <div class="flex justify-between">
-                                            <span>Basic Salary:</span>
-                                            <span>${data.basicSalary}</span>
-                                        </div>
-                                        <div class="flex justify-between">
-                                            <span>HRA:</span>
-                                            <span>${data.hra}</span>
-                                        </div>
-                                        <div class="flex justify-between">
-                                            <span>DA:</span>
-                                            <span>${data.da}</span>
-                                        </div>
-                                        <div class="flex justify-between font-semibold border-t pt-1">
-                                            <span>Gross Salary:</span>
-                                            <span>${data.grossSalary}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <h4 class="font-medium text-error-600 mb-2">Deductions</h4>
-                                    <div class="space-y-1 text-sm">
-                                        <div class="flex justify-between">
-                                            <span>PF:</span>
-                                            <span>${data.pf}</span>
-                                        </div>
-                                        <div class="flex justify-between">
-                                            <span>TDS:</span>
-                                            <span>${data.tds}</span>
-                                        </div>
-                                        <div class="flex justify-between font-semibold border-t pt-1">
-                                            <span>Total Deductions:</span>
-                                            <span>₹9,000</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="text-center">
-                            <div class="bg-primary-50 p-4 rounded-lg">
-                                <h3 class="font-bold text-lg text-primary">Net Salary: ${data.netSalary}</h3>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="flex space-x-3 p-6 border-t no-print">
-                        <button onclick="window.print()" class="flex-1 btn-primary">
-                            <svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
-                            </svg>
-                            Print Payslip
-                        </button>
-                        <button onclick="closePayslipModal()" class="flex-1 btn-secondary">Close</button>
-                    </div>
-                </div>
-            `;
-            
-            document.body.appendChild(modal);
-        }
 
-        // Close payslip modal
-        function closePayslipModal() {
-            const modal = document.getElementById('payslip-modal');
-            if (modal) {
-                modal.remove();
-            }
-        }
 
         // Load payslips from Firebase database
         async function loadPayslipsFromFirebase() {
@@ -1627,8 +1397,8 @@
             } catch (error) {
                 console.error('Error loading payslips from Firebase:', error);
                 
-                // Fallback to localStorage
-                loadPayslips();
+                // Don't fallback to avoid duplicate loading
+                console.log('Skipping localStorage fallback to prevent duplicate payslips');
             }
         }
 
@@ -1667,6 +1437,37 @@
             const currentTeacher = teachers.find(t => t.id === loggedInTeacherId);
             return currentTeacher ? (currentTeacher.department || 'Computer Engineering') : 'Computer Engineering';
         }
+
+        // Global print function - accessible from onclick
+        window.printPayslip = function(payslipId) {
+            console.log('🖨️ Print payslip called for ID:', payslipId);
+            
+            // Store payslip ID in session for printing
+            sessionStorage.setItem('printPayslipId', payslipId);
+            
+            // Open salary slip detail view in new window for printing
+            const printWindow = window.open('salary_slip_detail_view.html', '_blank');
+            
+            // Wait for the window to load and then trigger print
+            if (printWindow) {
+                printWindow.onload = function() {
+                    setTimeout(() => {
+                        printWindow.print();
+                    }, 1000);
+                };
+            }
+        };
+
+        // Global view function - accessible from onclick
+        window.viewPayslip = function(payslipId) {
+            console.log('👁️ View payslip called for ID:', payslipId);
+            
+            // Store payslip ID in session for the detail view
+            sessionStorage.setItem('printPayslipId', payslipId);
+            
+            // Redirect to salary slip detail view
+            window.location.href = 'salary_slip_detail_view.html';
+        };
     </script>
 <script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
 </body>

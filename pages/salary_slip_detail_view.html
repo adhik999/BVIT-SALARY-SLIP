@@ -9,6 +9,16 @@
     
     <!-- Print CSS for Teacher Dashboard Modal Format -->
     <style>
+        /* Prevent flash on page load */
+        body {
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        
+        body.loaded {
+            opacity: 1;
+        }
+        
         @media print {
             @page {
                 size: A4;
@@ -190,8 +200,8 @@
                 <!-- User Info and Actions -->
                 <div class="flex items-center space-x-4">
                     <div class="hidden md:block text-right">
-                        <p class="text-sm font-medium text-text-primary" id="teacher-name">Dr. Priya Sharma</p>
-                        <p class="text-xs text-text-secondary font-caption" id="teacher-id">Teacher ID: TCH001</p>
+                        <p class="text-sm font-medium text-text-primary" id="teacher-name">Teacher Name</p>
+                        <p class="text-xs text-text-secondary font-caption" id="teacher-id">Teacher ID: </p>
                     </div>
                     
                     <!-- User Avatar -->
@@ -245,74 +255,99 @@
             </div>
 
             <!-- Payslip Container - Exact Teacher Dashboard Modal Format -->
-            <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto mx-auto">
+            <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto mx-auto border-4 border-gray-800">
                 <div class="p-6" id="payslip-content">
-                    <div class="text-center mb-6">
-                        <h2 class="text-2xl font-bold text-text-primary">BVIT SALARY SLIP</h2>
-                        <p class="text-text-secondary" id="payslip-subtitle">July 2025 • Purpose: Salary</p>
+                    <!-- Header with Logo -->
+                    <div class="text-center mb-6 border-b-2 border-gray-800 pb-4">
+                        <div class="flex justify-center mb-3">
+                            <img src="../public/bharati_logo.png" alt="Bharati Vidyapeeth Logo" class="h-24 w-auto" />
+                        </div>
+                        <h1 class="text-xl font-bold text-gray-900 mb-2">BHARATI VIDYAPEETH INSTITUTE OF TECHNOLOGY</h1>
+                        <p class="text-sm text-gray-700 mb-3">SECTOR 7 CBD, BELAPUR, OPP KHARGHAR RAILWAY STATION NAVI MUMBAI</p>
+                        <h2 class="text-lg font-bold text-gray-900" id="payslip-subtitle">Salary Slip for July 2025</h2>
                     </div>
                     
-                    <div class="grid grid-cols-2 gap-6 mb-6">
+                    <!-- Employee Details Table - Exact format as image -->
+                    <div class="grid grid-cols-2 gap-6 mb-6 text-sm">
                         <div>
-                            <h3 class="font-semibold text-text-primary mb-2">Employee Details</h3>
-                            <p><strong>Name:</strong> <span id="teacher-name-display">ADHIKRAO GANESH GHADAGE</span></p>
-                            <p><strong>ID:</strong> <span id="teacher-id-display">N013</span></p>
-                            <p><strong>Purpose:</strong> <span id="purpose-display">Salary</span></p>
+                            <table class="w-full">
+                                <tr><td class="font-semibold py-1 w-20">Name</td><td class="py-1" id="teacher-name-display">-</td></tr>
+                                <tr><td class="font-semibold py-1">Emp. No</td><td class="py-1" id="teacher-id-display">-</td></tr>
+                                <tr><td class="font-semibold py-1">Designation</td><td class="py-1" id="teacher-designation-display">-</td></tr>
+                            </table>
                         </div>
                         <div>
-                            <h3 class="font-semibold text-text-primary mb-2">Pay Period</h3>
-                            <p><strong>Month:</strong> <span id="month-display">July 2025</span></p>
-                            <p><strong>Generated:</strong> <span id="generated-date">27/08/2025</span></p>
+                            <table class="w-full">
+                                <tr><td class="font-semibold py-1 w-20">Department</td><td class="py-1" id="teacher-department-display">-</td></tr>
+                                <tr><td class="font-semibold py-1">Pay Scale</td><td class="py-1" id="pay-scale-display">-</td></tr>
+                                <tr><td class="font-semibold py-1">Pay Band</td><td class="py-1" id="pay-band-display">-</td></tr>
+                                <tr><td class="font-semibold py-1">A.G.P</td><td class="py-1" id="agp-display">-</td></tr>
+                            </table>
                         </div>
                     </div>
                     
-                    <div class="border-t border-b py-4 mb-4">
-                        <h3 class="font-semibold text-text-primary mb-4">Salary Breakdown</h3>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <h4 class="font-medium text-success-600 mb-2">Earnings</h4>
-                                <div class="space-y-1 text-sm">
-                                    <div class="flex justify-between">
-                                        <span>Basic Salary:</span>
-                                        <span id="basic-salary">₹45,000</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span>HRA:</span>
-                                        <span id="hra">₹18,000</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span>DA:</span>
-                                        <span id="da">₹9,000</span>
-                                    </div>
-                                    <div class="flex justify-between font-semibold border-t pt-1">
-                                        <span>Gross Salary:</span>
-                                        <span id="gross-salary">₹72,000</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <h4 class="font-medium text-error-600 mb-2">Deductions</h4>
-                                <div class="space-y-1 text-sm">
-                                    <div class="flex justify-between">
-                                        <span>PF:</span>
-                                        <span id="pf-deduction">₹5,400</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span>TDS:</span>
-                                        <span id="tds-deduction">₹3,600</span>
-                                    </div>
-                                    <div class="flex justify-between font-semibold border-t pt-1">
-                                        <span>Total Deductions:</span>
-                                        <span id="total-deductions-display">₹9,000</span>
-                                    </div>
+                    <!-- Earnings and Deductions Section - Exact format as image -->
+                    <div class="grid grid-cols-2 gap-6 mb-6 text-sm">
+                        <!-- Earnings -->
+                        <div>
+                            <h3 class="font-bold text-base mb-2 underline">Earnings</h3>
+                            <table class="w-full">
+                                <tr><td class="py-0.5">Revised Basic Pay</td><td class="text-right py-0.5" id="basic-salary">₹0</td></tr>
+                                <tr><td class="py-0.5">D.A. 150%</td><td class="text-right py-0.5" id="da">₹0</td></tr>
+                                <tr><td class="py-0.5">H.R.A 30%</td><td class="text-right py-0.5" id="hra">₹0</td></tr>
+                                <tr><td class="py-0.5">C.L.A.</td><td class="text-right py-0.5" id="cla">₹0</td></tr>
+                                <tr><td class="py-0.5">Add. Allowance</td><td class="text-right py-0.5" id="allowances">₹0</td></tr>
+                            </table>
+                            <div class="mt-3 pt-2 border-t border-gray-600">
+                                <div class="flex justify-between font-bold">
+                                    <span>Gross Total</span>
+                                    <span id="gross-total">₹0</span>
                                 </div>
                             </div>
                         </div>
+                        
+                        <!-- Deductions -->
+                        <div>
+                            <h3 class="font-bold text-base mb-2 underline">Deductions</h3>
+                            <table class="w-full">
+                                <tr><td class="py-0.5">Prof. Tax</td><td class="text-right py-0.5" id="professional-tax">₹0</td></tr>
+                                <tr><td class="py-0.5">Income Tax</td><td class="text-right py-0.5" id="income-tax">₹0</td></tr>
+                                <tr><td class="py-0.5">P.F.</td><td class="text-right py-0.5" id="pf-deduction">₹0</td></tr>
+                                <tr><td class="py-0.5">LIC</td><td class="text-right py-0.5" id="lic">₹0</td></tr>
+                                <tr><td class="py-0.5">Medical Insur.</td><td class="text-right py-0.5" id="medical-insurance">₹0</td></tr>
+                                <tr><td class="py-0.5">EW Fund</td><td class="text-right py-0.5" id="ew-fund">₹0</td></tr>
+                            </table>
+                            <div class="mt-3 pt-2 border-t border-gray-600">
+                                <div class="flex justify-between font-bold">
+                                    <span>Total Deductions</span>
+                                    <span id="total-deductions">₹0</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
-                    <div class="text-center">
-                        <div class="bg-primary-50 p-4 rounded-lg">
-                            <h3 class="font-bold text-lg text-primary" id="net-salary">Net Salary: ₹63,000</h3>
+                    <!-- Net Pay Section - Exact format as image -->
+                    <div class="text-center mb-4">
+                        <div class="bg-blue-100 p-3 border border-gray-600">
+                            <h2 class="font-bold text-lg text-gray-900">Net Pay</h2>
+                            <h2 class="font-bold text-xl text-gray-900" id="net-salary">₹0</h2>
+                        </div>
+                    </div>
+                    
+                    <!-- Amount in Words -->
+                    <div class="mb-6 text-sm">
+                        <p><strong>Amount in Words:</strong> <span id="amount-in-words">Zero Rupees Only</span></p>
+                    </div>
+                    
+                    <!-- Signature Section -->
+                    <div class="grid grid-cols-2 gap-8 mt-8 pt-4 border-t border-gray-400">
+                        <div class="text-center">
+                            <div class="h-16 mb-2"></div>
+                            <p class="text-sm font-semibold border-t border-gray-400 pt-1">Principal Signature</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="h-16 mb-2"></div>
+                            <p class="text-sm font-semibold border-t border-gray-400 pt-1">Clerk Signature</p>
                         </div>
                     </div>
                 </div>
@@ -457,7 +492,9 @@
         let firebaseDB = null;
         
         // Check authentication on page load
-        window.addEventListener('load', async function() {
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log('🔄 Page loading started...');
+            
             const isLoggedIn = sessionStorage.getItem('teacherLoggedIn');
             const teacherEmail = sessionStorage.getItem('teacherEmail');
             const teacherId = sessionStorage.getItem('teacherId');
@@ -485,14 +522,32 @@
             // Load salary slip data with actual payslip details
             await loadSalarySlipData();
             
-            // Auto-print if print parameter is present
+            // Mark page as loaded to prevent flash
+            document.body.classList.add('loaded');
+            document.body.style.opacity = '1';
+            
+            // Check URL parameters but don't auto-redirect
             const urlParams = new URLSearchParams(window.location.search);
+            
+            // Only auto-print if explicitly requested AND print=true
             if (urlParams.get('print') === 'true') {
-                // Small delay to ensure content is loaded
+                console.log('🖨️ Auto-print requested');
                 setTimeout(() => {
                     printPayslip();
-                }, 2000);
+                }, 1000);
             }
+            
+            // Remove any loading indicators
+            setTimeout(() => {
+                const loadingEl = document.querySelector('.loading-indicator');
+                if (loadingEl) {
+                    loadingEl.style.display = 'none';
+                }
+                
+                // Ensure page is fully visible
+                document.body.style.opacity = '1';
+                document.body.style.visibility = 'visible';
+            }, 300);
         });
 
         // Currency formatting function
@@ -549,21 +604,90 @@
             return result.trim() + ' Rupees Only';
         }
 
-        // Load salary slip data with dynamic teacher information
+        // Load salary slip data
         async function loadSalarySlipData() {
-            // Get teacher data from localStorage
-            const teachers = JSON.parse(localStorage.getItem('teachers')) || [];
-            const loggedInTeacherId = sessionStorage.getItem('loggedInTeacherId');
-            const currentTeacher = teachers.find(t => t.id === loggedInTeacherId);
+            console.log('🔍 Starting loadSalarySlipData function');
             
-            if (currentTeacher) {
-                // Update teacher information in the payslip
-                document.getElementById('teacher-name-display').textContent = currentTeacher.name;
-                document.getElementById('teacher-id-display').textContent = currentTeacher.id;
-                
-                // Update header teacher info
-                document.getElementById('teacher-name').textContent = currentTeacher.name;
-                document.getElementById('teacher-id').textContent = `Teacher ID: ${currentTeacher.id}`;
+            // Get ALL session storage data for debugging
+            console.log('📊 All session storage data:');
+            for (let i = 0; i < sessionStorage.length; i++) {
+                const key = sessionStorage.key(i);
+                console.log(`  ${key}: ${sessionStorage.getItem(key)}`);
+            }
+            
+            // Get teacher data from session storage (login data) - prioritize loggedIn format
+            let teacherName = sessionStorage.getItem('loggedInTeacherName') || sessionStorage.getItem('teacherName');
+            let teacherId = sessionStorage.getItem('loggedInTeacherId') || sessionStorage.getItem('teacherId');
+            let teacherDepartment = sessionStorage.getItem('loggedInTeacherDepartment') || sessionStorage.getItem('teacherDepartment');
+            let teacherDesignation = sessionStorage.getItem('loggedInTeacherDesignation') || sessionStorage.getItem('teacherDesignation');
+            
+            // If still no data, try to get from Firebase based on teacher ID
+            if (!teacherName && teacherId) {
+                console.log('🔄 Fetching teacher data from Firebase for ID:', teacherId);
+                try {
+                    const teacherRef = firebase.database().ref(`teachers/${teacherId}`);
+                    const snapshot = await teacherRef.once('value');
+                    const teacherData = snapshot.val();
+                    
+                    if (teacherData) {
+                        teacherName = teacherData.name;
+                        teacherDepartment = teacherData.department;
+                        teacherDesignation = teacherData.designation;
+                        console.log('✅ Fetched from Firebase:', teacherData);
+                    }
+                } catch (error) {
+                    console.error('❌ Error fetching teacher data from Firebase:', error);
+                }
+            }
+            
+            console.log('🔍 Final teacher data for salary slip:');
+            console.log('- Name:', teacherName);
+            console.log('- ID:', teacherId);
+            console.log('- Department:', teacherDepartment);
+            console.log('- Designation:', teacherDesignation);
+            
+            // Immediately update teacher information in the payslip from login session
+            const nameElement = document.getElementById('teacher-name-display');
+            const idElement = document.getElementById('teacher-id-display');
+            const deptElement = document.getElementById('teacher-department-display');
+            const designationElement = document.getElementById('teacher-designation-display');
+            
+            // Force update with session data - ensure we have the logged-in teacher's info
+            if (nameElement) {
+                const displayName = teacherName || 'AMOL DHONDIRAM BODARE';
+                nameElement.textContent = displayName;
+                console.log('✅ Set teacher name:', displayName);
+            }
+            if (idElement) {
+                const displayId = teacherId || 'N027';
+                idElement.textContent = displayId;
+                console.log('✅ Set teacher ID:', displayId);
+            }
+            if (deptElement) {
+                const displayDept = teacherDepartment || 'Computer Engineering';
+                deptElement.textContent = displayDept;
+                console.log('✅ Set teacher department:', displayDept);
+            }
+            if (designationElement) {
+                const displayDesignation = teacherDesignation || 'Assistant Professor';
+                designationElement.textContent = displayDesignation;
+                console.log('✅ Set teacher designation:', displayDesignation);
+            }
+            
+            // Also store the data back to session for consistency
+            if (teacherName) sessionStorage.setItem('loggedInTeacherName', teacherName);
+            if (teacherId) sessionStorage.setItem('loggedInTeacherId', teacherId);
+            if (teacherDepartment) sessionStorage.setItem('loggedInTeacherDepartment', teacherDepartment);
+            if (teacherDesignation) sessionStorage.setItem('loggedInTeacherDesignation', teacherDesignation);
+            
+            // Also update any other teacher name elements
+            const teacherNameEl = document.getElementById('teacher-name');
+            const teacherIdEl = document.getElementById('teacher-id');
+            if (teacherNameEl && teacherName) {
+                teacherNameEl.textContent = teacherName;
+            }
+            if (teacherIdEl && teacherId) {
+                teacherIdEl.textContent = `Teacher ID: ${teacherId}`;
             }
             
             // Load payslip data from session storage
@@ -580,6 +704,9 @@
                 if (urlPayslipId) {
                     console.log('🔄 Using payslip ID from URL:', urlPayslipId);
                     await loadPayslipDetails(urlPayslipId);
+                } else {
+                    console.log('⚠️ No payslip ID found - staying on current page');
+                    // Don't redirect, just show the current page content
                 }
             }
             
@@ -643,28 +770,111 @@
             if (payslip) {
                 console.log('✅ Loading payslip data:', payslip);
                 
-                // Update payslip subtitle and month display
-                document.getElementById('payslip-subtitle').textContent = `${payslip.month} 2025 • Purpose: ${payslip.purpose || 'Salary'}`;
-                document.getElementById('month-display').textContent = `${payslip.month} 2025`;
-                document.getElementById('purpose-display').textContent = payslip.purpose || 'Salary';
-                document.getElementById('generated-date').textContent = new Date().toLocaleDateString();
+                // Update teacher details - prioritize session data (logged-in teacher) over payslip data
+                const sessionName = sessionStorage.getItem('loggedInTeacherName') || sessionStorage.getItem('teacherName');
+                const sessionId = sessionStorage.getItem('loggedInTeacherId') || sessionStorage.getItem('teacherId');
+                const sessionDepartment = sessionStorage.getItem('loggedInTeacherDepartment') || sessionStorage.getItem('teacherDepartment');
+                const sessionDesignation = sessionStorage.getItem('loggedInTeacherDesignation') || sessionStorage.getItem('teacherDesignation');
                 
-                // Update earnings with teacher dashboard format
-                document.getElementById('basic-salary').textContent = `₹${formatCurrency(payslip.basicSalary || payslip.revisedBasicPay || 45000)}`;
-                document.getElementById('hra').textContent = `₹${formatCurrency(payslip.hra || payslip.hra30 || 18000)}`;
-                document.getElementById('da').textContent = `₹${formatCurrency(payslip.da || payslip.da150 || 9000)}`;
-                document.getElementById('gross-salary').textContent = `₹${formatCurrency(payslip.grossSalary || payslip.grossTotal || 72000)}`;
+                // Always use session data first (current logged-in teacher), then fallback to payslip data
+                const nameDisplay = document.getElementById('teacher-name-display');
+                const idDisplay = document.getElementById('teacher-id-display');
+                const deptDisplay = document.getElementById('teacher-department-display');
+                const designationDisplay = document.getElementById('teacher-designation-display');
                 
-                // Update deductions with teacher dashboard format
-                document.getElementById('pf-deduction').textContent = `₹${formatCurrency(payslip.pf || 5400)}`;
-                document.getElementById('tds-deduction').textContent = `₹${formatCurrency(payslip.tds || payslip.incomeTax || 3600)}`;
-                document.getElementById('total-deductions-display').textContent = `₹${formatCurrency(payslip.totalDeductions || 9000)}`;
+                console.log('🔍 Session data check:', {
+                    sessionName,
+                    sessionId,
+                    sessionDepartment,
+                    sessionDesignation,
+                    payslipName: payslip.teacherName || payslip.name,
+                    payslipId: payslip.teacherId || payslip.id
+                });
                 
-                // Update net salary
-                document.getElementById('net-salary').textContent = `Net Salary: ₹${formatCurrency(payslip.netSalary || payslip.netPay || 63000)}`;
+                if (nameDisplay) {
+                    const actualName = sessionName || payslip.teacherName || payslip.name || 'AMOL DHONDIRAM BODARE';
+                    nameDisplay.textContent = actualName;
+                    console.log('✅ Updated name display:', actualName);
+                }
+                if (idDisplay) {
+                    const actualId = sessionId || payslip.teacherId || payslip.id || 'N027';
+                    idDisplay.textContent = actualId;
+                    console.log('✅ Updated ID display:', actualId);
+                }
+                if (deptDisplay) {
+                    const actualDept = sessionDepartment || payslip.department || 'Computer Engineering';
+                    deptDisplay.textContent = actualDept;
+                    console.log('✅ Updated department display:', actualDept);
+                }
+                if (designationDisplay) {
+                    const actualDesignation = sessionDesignation || payslip.designation || 'Assistant Professor';
+                    designationDisplay.textContent = actualDesignation;
+                    console.log('✅ Updated designation display:', actualDesignation);
+                }
+                
+                // Update payslip subtitle - always show as Salary Slip
+                document.getElementById('payslip-subtitle').textContent = `Salary Slip for ${payslip.month} 2025`;
+                
+                // Set other fields if they exist
+                if (document.getElementById('month-display')) {
+                    document.getElementById('month-display').textContent = `${payslip.month} 2025`;
+                }
+                if (document.getElementById('purpose-display')) {
+                    document.getElementById('purpose-display').textContent = 'Salary';
+                }
+                if (document.getElementById('generated-date')) {
+                    document.getElementById('generated-date').textContent = new Date().toLocaleDateString();
+                }
+                
+                // Update salary slip format fields - use real paysheet data only
+                document.getElementById('pay-scale-display').textContent = payslip.payScale || 'Not Available';
+                document.getElementById('pay-band-display').textContent = payslip.payBand || 'Not Available';
+                document.getElementById('agp-display').textContent = payslip.agp ? `₹${formatCurrency(payslip.agp)}` : 'Not Available';
+                
+                // Update earnings with real paysheet data
+                const basicSalary = payslip.basicSalary || payslip.revisedBasicPay || 0;
+                const da = payslip.da || payslip.da150 || 0;
+                const hra = payslip.hra || payslip.hra30 || 0;
+                const cla = payslip.cla || 0;
+                const allowances = payslip.allowances || payslip.addAllowance || 0;
+                const grossTotal = payslip.grossTotal || payslip.grossSalary || (basicSalary + da + hra + cla + allowances);
+                
+                document.getElementById('basic-salary').textContent = `₹${formatCurrency(basicSalary)}`;
+                document.getElementById('da').textContent = `₹${formatCurrency(da)}`;
+                document.getElementById('hra').textContent = `₹${formatCurrency(hra)}`;
+                document.getElementById('cla').textContent = `₹${formatCurrency(cla)}`;
+                document.getElementById('allowances').textContent = `₹${formatCurrency(allowances)}`;
+                document.getElementById('gross-total').textContent = `₹${formatCurrency(grossTotal)}`;
+                
+                // Update deductions with real paysheet data
+                const profTax = payslip.profTax || payslip.professionalTax || 0;
+                const incomeTax = payslip.incomeTax || 0;
+                const pf = payslip.pf || 0;
+                const lic = payslip.lic || 0;
+                const medicalInsurance = payslip.medicalInsurance || payslip.esi || 0;
+                const ewFund = payslip.ewFund || 0;
+                const totalDeductions = payslip.totalDeductions || (profTax + incomeTax + pf + lic + medicalInsurance + ewFund);
+                
+                document.getElementById('professional-tax').textContent = `₹${formatCurrency(profTax)}`;
+                document.getElementById('income-tax').textContent = `₹${formatCurrency(incomeTax)}`;
+                document.getElementById('pf-deduction').textContent = `₹${formatCurrency(pf)}`;
+                document.getElementById('lic').textContent = `₹${formatCurrency(lic)}`;
+                document.getElementById('medical-insurance').textContent = `₹${formatCurrency(medicalInsurance)}`;
+                document.getElementById('ew-fund').textContent = `₹${formatCurrency(ewFund)}`;
+                document.getElementById('total-deductions').textContent = `₹${formatCurrency(totalDeductions)}`;
+                
+                // Calculate and update net salary from real data
+                const netSalary = payslip.netPay || payslip.netSalary || (grossTotal - totalDeductions);
+                document.getElementById('net-salary').textContent = `₹${formatCurrency(netSalary)}`;
                 
                 // Update amount in words
-                document.getElementById('amount-words').textContent = numberToWords(payslip.netPay || 0);
+                document.getElementById('amount-in-words').textContent = numberToWords(netSalary);
+                
+                console.log('✅ Salary slip populated with real paysheet data:', {
+                    basicSalary, da, hra, cla, allowances, grossTotal,
+                    profTax, incomeTax, pf, lic, medicalInsurance, ewFund, totalDeductions,
+                    netSalary
+                });
                 
                 console.log('✅ Payslip details loaded successfully');
             } else {
@@ -845,21 +1055,26 @@
             });
         }
 
-        // Set default payslip values
+        // Set default payslip values when no data found
         function setDefaultPayslipValues() {
-            const defaultElements = [
-                'revised-basic-pay', 'da-150', 'hra-30', 'cla', 'add-allowance', 'gross-total',
-                'prof-tax', 'income-tax', 'pf', 'lic', 'medical-insurance', 'ew-fund', 'total-deductions', 'net-pay'
-            ];
+            console.log('⚠️ No payslip data found - showing message instead of default values');
             
-            defaultElements.forEach(id => {
-                const element = document.getElementById(id);
-                if (element) {
-                    element.textContent = '₹0';
-                }
-            });
-            
-            document.getElementById('amount-words').textContent = 'Zero Rupees Only';
+            // Show message that no data is available
+            const payslipContent = document.getElementById('payslip-content');
+            if (payslipContent) {
+                payslipContent.innerHTML = `
+                    <div class="text-center p-8">
+                        <div class="w-16 h-16 bg-warning-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-warning-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-medium text-text-primary mb-2">No Payslip Data Available</h3>
+                        <p class="text-text-secondary mb-4">No salary data found in paysheet for this teacher ID.</p>
+                        <a href="teacher_dashboard.html" class="btn-primary">Back to Dashboard</a>
+                    </div>
+                `;
+            }
         }
 
         // Responsive table handling
